@@ -22,8 +22,17 @@ public class Janet {
 
         Scanner sc = new Scanner(System.in);
         String curr;
+        TaskList taskList = new TaskList();
         while (!(curr = sc.next()).equals(exitWord)) {
             System.out.println(curr);
+            if (curr.equals("list")) {
+                System.out.println(taskList.listTasks());
+            } else {
+                TaskList.AddTaskResult res = taskList.addTask(curr);
+                taskList = res.taskList();
+                System.out.println((res.resultString()));
+            }
+
         }
 
         System.out.printf("%s\n", goodbye);
