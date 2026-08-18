@@ -1,8 +1,8 @@
 import java.util.Scanner;
 
 public class Janet {
-    private static String greeting = "Hi! I'm Janet, your friendly informational assistant. Let me know what you need!";
-    private static String banner = """
+    private static final String greeting = "Hi! I'm Janet, your friendly informational assistant. Let me know what you need!";
+    private static final String banner = """
                   ⠀ ⠘⠒⠖⠲⠒⠖⠲⠒⠖⠲⠒⠖⠲⢤⣀⠀
                 ⠀⠀⠀⣀⣴⠦⠠⣤⠤⠤⠤⠤⠤⠤⠤⠤⠤⣤⠈⣆
                 ⠀⣰⡾⠋⠀⠀⠀⣻⠀⠀⠀⠀⣖⣳⠀⠀⠀⣽⠀⣸
@@ -14,8 +14,8 @@ public class Janet {
                 ⠀⠈⠳⣎⠙⠢⣄⠀⠀⢀⣤⠴⡶⠀⠀⠀⠀⠀⠀⠀
                 ⠀⠀⠀⠈⠓⠶⠤⣉⣹⣁⣀⣋⣧⠀⠀⠀⠀⠀⠀⠀
             """;
-    private static String goodbye = "Bye!";
-    private static String exitWord = "bye";
+    private static final String goodbye = "Bye!";
+    private static final String exitWord = "bye";
 
     public static void main(String[] args) {
         System.out.printf("%s\n%s\n", Janet.banner, Janet.greeting);
