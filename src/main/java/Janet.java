@@ -31,8 +31,10 @@ public class Janet {
                 break;
             }
 
-            String cmd = currLine.split("\\s+")[0];
+            String cmd = currLine.split("\\s+")[0].trim();
             String argsLine = currLine.substring(cmd.length()).trim(); // remaining string
+
+            System.out.printf("cmd: %s\nargs:%s\n", cmd, argsLine);
 
             switch (cmd) {
             case "list":
@@ -50,6 +52,9 @@ public class Janet {
                 break;
             case "event":
                 taskList = Janet.addAndGetTaskList(new Event(false, argsLine), taskList);
+                break;
+            case "delete":
+                taskList = taskList.deleteTask(Integer.parseInt(argsLine));
                 break;
             default:
                 System.out.println("Sorry, I don't understand this command :(");

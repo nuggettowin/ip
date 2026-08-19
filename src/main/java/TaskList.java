@@ -24,19 +24,13 @@ public class TaskList {
         return new TaskList(addedTask);
     }
 
-    public TaskList removeTask(int pos) {
-        Optional<Task> taskToRemove = this.tasks
-                .stream()
-                .skip(pos - 1)
-                .findFirst();
-
-        Optional<List<Task>> taskListAfterDeletion = taskToRemove.map(t -> this.tasks
-                .stream()
-                .filter(x -> !x.equals(t))
-                .toList()
+    public TaskList deleteTask(int pos) {
+        return new TaskList(
+                IntStream.range(0, this.tasks.size())
+                        .filter(i -> i != pos - 1)
+                        .mapToObj(i -> this.tasks.get(i))
+                        .toList()
         );
-
-        return taskListAfterDeletion.map(x -> new TaskList(x)).orElse(new TaskList());
     }
 
     public Optional<String> listTasks() {
