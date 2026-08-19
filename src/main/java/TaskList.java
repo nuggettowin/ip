@@ -25,7 +25,18 @@ public class TaskList {
     }
 
     public TaskList removeTask(int pos) {
+        Optional<Task> taskToRemove = this.tasks
+                .stream()
+                .skip(pos - 1)
+                .findFirst();
 
+        Optional<List<Task>> taskListAfterDeletion = taskToRemove.map(t -> this.tasks
+                .stream()
+                .filter(x -> !x.equals(t))
+                .toList()
+        );
+
+        return taskListAfterDeletion.map(x -> new TaskList(x)).orElse(new TaskList());
     }
 
     public Optional<String> listTasks() {
