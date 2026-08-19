@@ -28,6 +28,8 @@ public class Janet {
             if (curr.equals("list")) {
                 System.out.println(taskList.listTasks()
                         .orElse("No tasks listed!"));
+            } else if (curr.equals("mark")) {
+                taskList = taskList.markTask(Integer.parseInt(sc.next()));
             } else {
                 TaskList.AddTaskResult res = taskList.addTask(curr);
                 taskList = res.taskList();
