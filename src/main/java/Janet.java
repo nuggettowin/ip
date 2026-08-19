@@ -14,7 +14,7 @@ public class Janet {
                 ⠀⠈⠳⣎⠙⠢⣄⠀⠀⢀⣤⠴⡶⠀⠀⠀⠀⠀⠀⠀
                 ⠀⠀⠀⠈⠓⠶⠤⣉⣹⣁⣀⣋⣧⠀⠀⠀⠀⠀⠀⠀
             """;
-    private static final String goodbye = "Bye!";
+    private static final String goodbye = "Bye! Take it sleazy!";
     private static final String exitWord = "bye";
 
     public static void main(String[] args) {
@@ -26,7 +26,8 @@ public class Janet {
         while (!(curr = sc.next()).equals(exitWord)) {
             System.out.println(curr);
             if (curr.equals("list")) {
-                System.out.println(taskList.listTasks());
+                System.out.println(taskList.listTasks()
+                        .orElse("No tasks listed!"));
             } else {
                 TaskList.AddTaskResult res = taskList.addTask(curr);
                 taskList = res.taskList();
