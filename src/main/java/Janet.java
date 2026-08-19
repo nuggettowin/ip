@@ -25,19 +25,34 @@ public class Janet {
         TaskList taskList = new TaskList();
         while (!(curr = sc.next()).equals(exitWord)) {
             System.out.println(curr);
-            if (curr.equals("list")) {
+
+            switch (curr) {
+            case "list":
                 System.out.println(taskList.listTasks()
                         .orElse("No tasks listed!"));
-            } else if (curr.equals("mark")) {
+                break;
+            case "mark":
                 taskList = taskList.markTask(Integer.parseInt(sc.next()));
-            } else {
-                TaskList.AddTaskResult res = taskList.addTask(curr);
-                taskList = res.taskList();
-                System.out.println((res.resultString()));
+                break;
+            case "todo":
+                taskList = Janet.addAndGetTaskList(new Todo(false, ""), taskList);
+                break;
+            case "deadline":
+                taskList = Janet.addAndGetTaskList(new Deadline(false, ""), taskList);
+                break;
+            case "event":
+                taskList = Janet.addAndGetTaskList(new Event(false, ""), taskList);
+                break;
+            default:
+                System.out.println("Sorry, I don't understand this command :(");
             }
-
         }
-
         System.out.printf("%s\n", goodbye);
+    }
+
+    private static TaskList addAndGetTaskList(Task task, TaskList taskList) {
+        TaskList ret = taskList.addTask(task);
+        System.out.printf("Added %s\n", task);
+        return ret;
     }
 }

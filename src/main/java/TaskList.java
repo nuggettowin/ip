@@ -4,9 +4,6 @@ import java.util.stream.Stream;
 import java.util.stream.IntStream;
 
 public class TaskList {
-    public record AddTaskResult(TaskList taskList, String resultString) {
-    }
-
     private final List<Task> tasks;
     private static final String success_message = "Added ";
 
@@ -18,14 +15,13 @@ public class TaskList {
         this.tasks = tasks;
     }
 
-    public AddTaskResult addTask(String task) {
+    public TaskList addTask(Task task) {
         List<Task> addedTask = Stream.concat(
                         this.tasks.stream(),
-                        Stream.of(new Task(false, task))
+                        Stream.of(task)
                 )
                 .toList();
-        TaskList listRes = new TaskList(addedTask);
-        return new AddTaskResult(listRes, this.success_message.concat(task));
+        return new TaskList(addedTask);
     }
 
     public Optional<String> listTasks() {
