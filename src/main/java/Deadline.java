@@ -1,11 +1,12 @@
 public class Deadline extends Task {
     private final String deadline;
     private final static String TASK_TYPE = "D";
+    private final static String DEADLINE_SEP = "/by";
 
     public Deadline(boolean isDone, String argsLine) {
-        int deadlineIndex = argsLine.indexOf("/by");
-        String taskLabel = argsLine.substring(0, deadlineIndex);
-        this.deadline = argsLine.substring(deadlineIndex);
+        int deadlineIndex = argsLine.indexOf(DEADLINE_SEP);
+        String taskLabel = argsLine.substring(0, deadlineIndex).trim();
+        this.deadline = argsLine.substring(deadlineIndex + DEADLINE_SEP.length()).trim();
 
         super(isDone, Deadline.TASK_TYPE, taskLabel);
     }
@@ -22,6 +23,6 @@ public class Deadline extends Task {
 
     @Override
     public String toString() {
-        return super.taskLabel;
+        return String.format("%s (by: %s)", super.toString(), this.deadline);
     }
 }

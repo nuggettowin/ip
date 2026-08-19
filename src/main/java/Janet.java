@@ -40,7 +40,7 @@ public class Janet {
                         .orElse("No tasks listed!"));
                 break;
             case "mark":
-                taskList = taskList.markTask(Integer.parseInt(sc.next()));
+                taskList = taskList.markTask(Integer.parseInt(argsLine));
                 break;
             case "todo":
                 taskList = Janet.addAndGetTaskList(new Todo(false, argsLine), taskList);

@@ -24,6 +24,10 @@ public class TaskList {
         return new TaskList(addedTask);
     }
 
+    public TaskList removeTask(int pos) {
+
+    }
+
     public Optional<String> listTasks() {
         return IntStream.range(1, this.tasks.size() + 1)
                 .mapToObj(i -> Integer.toString(i) + ". " + this.tasks.get(i - 1))

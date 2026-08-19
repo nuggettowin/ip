@@ -14,6 +14,5 @@ public abstract class Task {
     @Override
     public String toString() {
         return String.format("[%s][%s] %s", this.taskType, this.isDone ? "X" : " ", this.taskLabel);
-        // return this.taskLabel + " " + this.isDone;
     }
 }
