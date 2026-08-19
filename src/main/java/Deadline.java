@@ -1,10 +1,17 @@
 public class Deadline extends Task {
-    public Deadline(boolean isDone, String taskLabel) {
+    private final String deadline;
+
+    public Deadline(boolean isDone, String argsLine) {
+        int deadlineIndex = argsLine.indexOf("/by");
+        String taskLabel = argsLine.substring(0, deadlineIndex);
+        String deadline = argsLine.substring(deadlineIndex);
+
+        this.deadline = deadline;
         super(isDone, taskLabel);
     }
 
     @Override
     public String toString() {
-        return "Deadline";
+        return super.taskLabel;
     }
 }

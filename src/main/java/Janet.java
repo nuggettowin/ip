@@ -21,12 +21,20 @@ public class Janet {
         System.out.printf("%s\n%s\n", Janet.banner, Janet.greeting);
 
         Scanner sc = new Scanner(System.in);
-        String curr;
         TaskList taskList = new TaskList();
-        while (!(curr = sc.next()).equals(exitWord)) {
-            System.out.println(curr);
 
-            switch (curr) {
+        while (true) {
+            String currLine = sc.nextLine().trim();
+            System.out.printf("Current line: %s\n", currLine);
+
+            if (currLine.equals(exitWord)) {
+                break;
+            }
+
+            String cmd = currLine.split("\\s+")[0];
+            String argsLine = currLine.substring(cmd.length()).trim(); // remaining string
+
+            switch (cmd) {
             case "list":
                 System.out.println(taskList.listTasks()
                         .orElse("No tasks listed!"));
@@ -35,13 +43,13 @@ public class Janet {
                 taskList = taskList.markTask(Integer.parseInt(sc.next()));
                 break;
             case "todo":
-                taskList = Janet.addAndGetTaskList(new Todo(false, ""), taskList);
+                taskList = Janet.addAndGetTaskList(new Todo(false, argsLine), taskList);
                 break;
             case "deadline":
-                taskList = Janet.addAndGetTaskList(new Deadline(false, ""), taskList);
+                taskList = Janet.addAndGetTaskList(new Deadline(false, argsLine), taskList);
                 break;
             case "event":
-                taskList = Janet.addAndGetTaskList(new Event(false, ""), taskList);
+                taskList = Janet.addAndGetTaskList(new Event(false, argsLine), taskList);
                 break;
             default:
                 System.out.println("Sorry, I don't understand this command :(");

@@ -1,6 +1,6 @@
 public class Task {
     private final boolean isDone;
-    private final String taskLabel;
+    protected final String taskLabel;
 
     public Task(boolean isDone, String taskLabel) {
         this.isDone = isDone;
