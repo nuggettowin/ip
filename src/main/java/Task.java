@@ -1,18 +1,19 @@
-public class Task {
+public abstract class Task {
     private final boolean isDone;
+    protected final String taskType;
     protected final String taskLabel;
 
-    public Task(boolean isDone, String taskLabel) {
+    public Task(boolean isDone, String taskType, String taskLabel) {
         this.isDone = isDone;
+        this.taskType = taskType;
         this.taskLabel = taskLabel;
     }
 
-    public Task markDone() {
-        return new Task(true, this.taskLabel);
-    }
+    public abstract Task markDone();
 
     @Override
     public String toString() {
-        return this.taskLabel + " " + this.isDone;
+        return String.format("[%s][%s] %s", this.taskType, this.isDone ? "X" : " ", this.taskLabel);
+        // return this.taskLabel + " " + this.isDone;
     }
 }
