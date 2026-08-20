@@ -8,9 +8,17 @@ public class Event extends Task {
     public Event(boolean isDone, String argsLine) throws JanetException {
         int fromIndex = argsLine.indexOf(Event.FROM_SEP);
         int toIndex = argsLine.indexOf(Event.TO_SEP);
+
+        if (fromIndex == -1 || toIndex == -1) {
+            throw new JanetException("From or To not found!");
+        }
         String taskLabel = argsLine.substring(0, fromIndex).trim();
         String from = argsLine.substring(fromIndex + Event.FROM_SEP.length(), toIndex).trim();
         String to = argsLine.substring(toIndex + Event.TO_SEP.length()).trim();
+
+        if (from.isEmpty() || to.isEmpty()) {
+            throw new JanetException(String.format("Invalid event arguments! From: %s, to: %s\n", from, to));
+        }
 
         this.from = from;
         this.to = to;

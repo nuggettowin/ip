@@ -24,7 +24,10 @@ public class TaskList {
         return new TaskList(addedTask);
     }
 
-    public TaskList deleteTask(int pos) {
+    public TaskList deleteTask(int pos) throws JanetException {
+        if (pos < 1 || pos > this.tasks.size()) {
+            throw new JanetException(String.format("Deletion out of index! Current list size: %d", this.tasks.size()));
+        }
         return new TaskList(
                 IntStream.range(0, this.tasks.size())
                         .filter(i -> i != pos - 1)
@@ -40,6 +43,9 @@ public class TaskList {
     }
 
     public TaskList markTask(int pos) throws JanetException {
+        if (pos < 1 || pos > this.tasks.size()) {
+            throw new JanetException(String.format("Deletion out of index! Current list size: %d", this.tasks.size()));
+        }
         List<Task> front = this.tasks.subList(0, pos - 1);
         List<Task> back = this.tasks.subList(pos, this.tasks.size());
         List<Task> markedTask = List.of(
