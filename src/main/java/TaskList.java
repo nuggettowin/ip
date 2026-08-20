@@ -39,7 +39,7 @@ public class TaskList {
                 .reduce((a, b) -> a + "\n" + b);
     }
 
-    public TaskList markTask(int pos) {
+    public TaskList markTask(int pos) throws JanetException {
         List<Task> front = this.tasks.subList(0, pos - 1);
         List<Task> back = this.tasks.subList(pos, this.tasks.size());
         List<Task> markedTask = List.of(

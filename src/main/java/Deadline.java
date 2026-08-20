@@ -3,7 +3,7 @@ public class Deadline extends Task {
     private final static String TASK_TYPE = "D";
     private final static String DEADLINE_SEP = "/by";
 
-    public Deadline(boolean isDone, String argsLine) {
+    public Deadline(boolean isDone, String argsLine) throws JanetException {
         int deadlineIndex = argsLine.indexOf(DEADLINE_SEP);
         String taskLabel = argsLine.substring(0, deadlineIndex).trim();
         this.deadline = argsLine.substring(deadlineIndex + DEADLINE_SEP.length()).trim();
@@ -11,13 +11,13 @@ public class Deadline extends Task {
         super(isDone, Deadline.TASK_TYPE, taskLabel);
     }
 
-    private Deadline(boolean isDone, String taskLabel, String deadline) {
+    private Deadline(boolean isDone, String taskLabel, String deadline) throws JanetException {
         super(isDone, Deadline.TASK_TYPE, taskLabel);
         this.deadline = deadline;
     }
 
     @Override
-    public Task markDone() {
+    public Task markDone() throws JanetException {
         return new Deadline(true, super.taskLabel, this.deadline);
     }
 

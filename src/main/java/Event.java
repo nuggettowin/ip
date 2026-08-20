@@ -5,7 +5,7 @@ public class Event extends Task {
     private final static String FROM_SEP = "/from";
     private final static String TO_SEP = "/to";
 
-    public Event(boolean isDone, String argsLine) {
+    public Event(boolean isDone, String argsLine) throws JanetException {
         int fromIndex = argsLine.indexOf(Event.FROM_SEP);
         int toIndex = argsLine.indexOf(Event.TO_SEP);
         String taskLabel = argsLine.substring(0, fromIndex).trim();
@@ -17,14 +17,14 @@ public class Event extends Task {
         super(isDone, Event.TASK_TYPE, taskLabel);
     }
 
-    private Event(boolean isDone, String taskLabel, String from, String to) {
+    private Event(boolean isDone, String taskLabel, String from, String to) throws JanetException {
         super(isDone, Event.TASK_TYPE, taskLabel);
         this.from = from;
         this.to = to;
     }
 
     @Override
-    public Task markDone() {
+    public Task markDone() throws JanetException {
         return new Event(true, super.taskLabel, this.from, this.to);
     }
 

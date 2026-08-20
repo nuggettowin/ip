@@ -33,12 +33,8 @@ public class Janet {
                 break;
             }
 
-            String cmd = currLine.split("\\s+")[0].trim();
-            String argsLine = currLine.substring(cmd.length()).trim(); // remaining string
-            System.out.printf("cmd: %s\nargs:%s\n", cmd, argsLine);
-
             try {
-                processCmd(cmd, argsLine, taskList);
+                taskList = processCmd(currLine, taskList);
             } catch (JanetException e) {
                 System.out.printf("Failure: %s\n", e.toString());
             }
@@ -47,11 +43,15 @@ public class Janet {
         System.out.printf("%s\n", goodbye);
     }
 
-    private static void processCmd(String cmd, String argsLine, TaskList taskList) throws JanetException {
+    private static TaskList processCmd(String currLine, TaskList taskList) throws JanetException {
+        String cmd = currLine.split("\\s+")[0].trim();
+        String argsLine = currLine.substring(cmd.length()).trim(); // remaining string
+
         switch (cmd) {
         case "list":
-            System.out.println(taskList.listTasks()
-                    .orElse("No tasks listed!"));
+            System.out.println(
+                    taskList.listTasks().orElse("No tasks listed!")
+            );
             break;
         case "mark":
             taskList = taskList.markTask(Integer.parseInt(argsLine));
@@ -72,6 +72,8 @@ public class Janet {
             System.out.println("Sorry, I don't understand this command :(");
             throw new JanetException("Unrecognised command!");
         }
+
+        return taskList;
     }
 
     private static TaskList addAndGetTaskList(Task task, TaskList taskList) {

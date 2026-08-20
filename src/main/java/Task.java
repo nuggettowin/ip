@@ -3,13 +3,16 @@ public abstract class Task {
     protected final String taskType;
     protected final String taskLabel;
 
-    public Task(boolean isDone, String taskType, String taskLabel) {
+    public Task(boolean isDone, String taskType, String taskLabel) throws JanetException {
+        if (taskLabel.isEmpty()) {
+            throw new JanetException("No task description provided!");
+        }
         this.isDone = isDone;
         this.taskType = taskType;
         this.taskLabel = taskLabel;
     }
 
-    public abstract Task markDone();
+    public abstract Task markDone() throws JanetException;
 
     @Override
     public String toString() {
