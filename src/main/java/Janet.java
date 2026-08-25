@@ -44,10 +44,4 @@ public class Janet {
         }
         System.out.printf("%s\n", goodbye);
     }
-
-    private static TaskList addAndGetTaskList(Task task, TaskList taskList) {
-        TaskList ret = taskList.addTask(task);
-        System.out.printf("Added %s\n", task);
-        return ret;
-    }
 }
