@@ -1,7 +1,13 @@
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+
 public class Deadline extends Task {
-    private final String deadline;
+    private final LocalDate deadline;
     private final static String TASK_TYPE = "D";
     private final static String DEADLINE_SEP = "/by";
+    private final static DateTimeFormatter dateTimeFormat =
+            DateTimeFormatter.ofPattern("MMM d yyyy");
 
     public Deadline(boolean isDone, String argsLine) throws JanetException {
         int deadlineIndex = argsLine.indexOf(DEADLINE_SEP);
@@ -16,12 +22,16 @@ public class Deadline extends Task {
             throw new JanetException(String.format("Invalid deadline arguments! Deadline: %s\n", deadline));
         }
 
-        this.deadline = deadline;
+        try {
+            this.deadline = LocalDate.parse(deadline);
+        } catch (DateTimeParseException e) {
+            throw new JanetException("Invalid date format");
+        }
 
         super(isDone, Deadline.TASK_TYPE, taskLabel);
     }
 
-    private Deadline(boolean isDone, String taskLabel, String deadline) throws JanetException {
+    private Deadline(boolean isDone, String taskLabel, LocalDate deadline) throws JanetException {
         super(isDone, Deadline.TASK_TYPE, taskLabel);
         this.deadline = deadline;
     }
