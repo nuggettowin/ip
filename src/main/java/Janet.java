@@ -28,7 +28,7 @@ public class Janet {
     private static final String goodbye = "Bye! Take it sleazy!";
     private static final String exitWord = "bye";
 
-    public static void main() {
+    public static void main(String[] args) {
         System.out.printf("%s\n%s\n", Janet.BANNER, Janet.GREETING);
         Scanner sc = new Scanner(System.in);
         new Janet().processLoop(sc);
