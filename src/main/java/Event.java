@@ -1,10 +1,17 @@
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.time.LocalDate;
+
 public class Event extends Task {
-    private final String from;
-    private final String to;
+    private final LocalDate from;
+    private final LocalDate to;
     private static final String TASK_TYPE = "E";
     private final static String FROM_SEP = "/from";
     private final static String TO_SEP = "/to";
+    private final static DateTimeFormatter dateTimeFormat =
+            DateTimeFormatter.ofPattern("MMM d yyyy");
 
+    // TODO: handle case where start > end
     public Event(boolean isDone, String argsLine) throws JanetException {
         int fromIndex = argsLine.indexOf(Event.FROM_SEP);
         int toIndex = argsLine.indexOf(Event.TO_SEP);
@@ -20,12 +27,19 @@ public class Event extends Task {
             throw new JanetException(String.format("Invalid event arguments! From: %s, to: %s\n", from, to));
         }
 
-        this.from = from;
-        this.to = to;
+        try {
+            LocalDate fromDate = LocalDate.parse(from);
+            LocalDate toDate = LocalDate.parse(to);
+            this.from = fromDate;
+            this.to = toDate;
+        } catch (DateTimeParseException e) {
+            throw new JanetException("Invalid date format");
+        }
+
         super(isDone, Event.TASK_TYPE, taskLabel);
     }
 
-    private Event(boolean isDone, String taskLabel, String from, String to) throws JanetException {
+    private Event(boolean isDone, String taskLabel, LocalDate from, LocalDate to) throws JanetException {
         super(isDone, Event.TASK_TYPE, taskLabel);
         this.from = from;
         this.to = to;
@@ -38,6 +52,10 @@ public class Event extends Task {
 
     @Override
     public String toString() {
-        return String.format("%s (from: %s to: %s)", super.toString(), this.from, this.to);
+        return String.format("%s (from: %s to: %s)",
+                super.toString(),
+                this.from.format(Event.dateTimeFormat),
+                this.to.format(Event.dateTimeFormat)
+        );
     }
 }
