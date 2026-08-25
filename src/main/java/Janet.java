@@ -44,8 +44,8 @@ public class Janet {
             }
 
             try {
-                TaskList.CommandResult res = new Parser(taskList).processCommand(currLine);
-                taskList = res.updatedTaskList().orElse(taskList);
+                TaskList.CommandResult res = new Parser(this.tasks).processCommand(currLine);
+                this.tasks = res.updatedTaskList().orElse(this.tasks);
                 System.out.println(res.message());
             } catch (JanetException e) {
                 System.out.printf("Failure: %s\n", e.toString());
