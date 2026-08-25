@@ -24,8 +24,13 @@ public class Parser {
         String command = currLine.split("\\s+")[0].trim();
         String argsLine = currLine.substring(command.length()).trim(); // remaining string
 
-        return Optional.ofNullable(this.commandMap.get(command).handle(argsLine))
-                .orElseThrow(() -> new JanetException("Unrecognised command!"));
+        System.out.printf("Command: %s, arg: %s\n", command, argsLine);
+
+        if (!this.commandMap.containsKey(command)) {
+            throw new JanetException("Unrecognised command!");
+        } else {
+            return this.commandMap.get(command).handle(argsLine);
+        }
     }
 
     private Optional<TaskList> handleListTasksCommand(String argsLine) {
