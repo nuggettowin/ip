@@ -20,7 +20,7 @@ public class Parser {
         this.taskList = taskList;
     }
 
-    public Optional<TaskList> processCommand(String currLine) throws JanetException {
+    public TaskList.CommandResult processCommand(String currLine) throws JanetException {
         String command = currLine.split("\\s+")[0].trim();
         String argsLine = currLine.substring(command.length()).trim(); // remaining string
 
@@ -33,34 +33,31 @@ public class Parser {
         }
     }
 
-    private Optional<TaskList> handleListTasksCommand(String argsLine) {
-        System.out.println(this.taskList.listTasks().orElse("No tasks listed!"));
-        return Optional.empty();
+    private TaskList.CommandResult handleListTasksCommand(String argsLine) {
+        return this.taskList.listTasks();
     }
 
-    private Optional<TaskList> handleMarkTaskCommand(String argsLine) throws JanetException {
-        return Optional.of(this.taskList.markTask(Integer.parseInt(argsLine)));
+    private TaskList.CommandResult handleMarkTaskCommand(String argsLine) throws JanetException {
+        return this.taskList.markTask(Integer.parseInt(argsLine));
     }
 
-    private Optional<TaskList> handleAddTodoCommand(String argsLine) throws JanetException {
+    private TaskList.CommandResult handleAddTodoCommand(String argsLine) throws JanetException {
         return this.handleAddTaskCommand(new Todo(false, argsLine));
     }
 
-    private Optional<TaskList> handleAddDeadlineCommand(String argsLine) throws JanetException {
+    private TaskList.CommandResult handleAddDeadlineCommand(String argsLine) throws JanetException {
         return this.handleAddTaskCommand(new Deadline(false, argsLine));
     }
 
-    private Optional<TaskList> handleAddEventCommand(String argsLine) throws JanetException {
+    private TaskList.CommandResult handleAddEventCommand(String argsLine) throws JanetException {
         return this.handleAddTaskCommand(new Event(false, argsLine));
     }
 
-    private Optional<TaskList> handleAddTaskCommand(Task task) {
-        TaskList ret = this.taskList.addTask(task);
-        System.out.printf("Added %s\n", task);
-        return Optional.of(ret);
+    private TaskList.CommandResult handleAddTaskCommand(Task task) {
+        return this.taskList.addTask(task);
     }
 
-    private Optional<TaskList> handleDeleteTaskCommand(String argsLine) throws JanetException {
-        return Optional.of(this.taskList.deleteTask(Integer.parseInt(argsLine)));
+    private TaskList.CommandResult handleDeleteTaskCommand(String argsLine) throws JanetException {
+        return this.taskList.deleteTask(Integer.parseInt(argsLine));
     }
 }
