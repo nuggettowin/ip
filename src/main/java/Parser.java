@@ -20,11 +20,12 @@ public class Parser {
         this.taskList = taskList;
     }
 
-    private Optional<TaskList> processCommand(String currLine) throws JanetException {
+    public Optional<TaskList> processCommand(String currLine) throws JanetException {
         String command = currLine.split("\\s+")[0].trim();
         String argsLine = currLine.substring(command.length()).trim(); // remaining string
 
-        return this.commandMap.get(command).handle(argsLine);
+        return Optional.ofNullable(this.commandMap.get(command).handle(argsLine))
+                .orElseThrow(() -> new JanetException("Unrecognised command!"));
     }
 
     private Optional<TaskList> handleListTasksCommand(String argsLine) {
