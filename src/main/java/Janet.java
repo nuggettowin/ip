@@ -1,3 +1,5 @@
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Janet {
@@ -6,10 +8,11 @@ public class Janet {
     private TaskList tasks;
     private Ui ui;
 
-    private static String filePath = "data/tasks.txt";
+    private static final String FILE_PATH = "data/tasks.txt";
 
-    public Janet() {
+    public Janet() throws IOException {
         this.tasks = new TaskList();
+        this.storage = new Storage(Janet.FILE_PATH);
     }
 
     private static final String GREETING = "Hi! I'm Janet, your friendly informational assistant. Let me know what you need!";
@@ -31,10 +34,16 @@ public class Janet {
     public static void main(String[] args) {
         System.out.printf("%s\n%s\n", Janet.BANNER, Janet.GREETING);
         Scanner sc = new Scanner(System.in);
-        new Janet().processLoop(sc);
+        try {
+             new Janet().run(sc);
+        } catch (IOException e) {
+            System.out.println(e);
+        }
     }
 
-    private void processLoop(Scanner sc) {
+    private void run(Scanner sc) throws FileNotFoundException {
+        System.out.println(this.storage.readFromFile());
+
         while (true) {
             String currLine = sc.nextLine().trim();
             System.out.printf("Current line: %s\n", currLine);
@@ -47,6 +56,10 @@ public class Janet {
                 TaskList.CommandResult res = new Parser(this.tasks).processCommand(currLine);
                 this.tasks = res.updatedTaskList().orElse(this.tasks);
                 System.out.println(res.message());
+
+                this.storage.writeToFile(res.updatedTaskList().toString());
+            } catch (IOException e) {
+                System.out.printf("IO Failure: %s\n", e.toString());
             } catch (JanetException e) {
                 System.out.printf("Failure: %s\n", e.toString());
             }
