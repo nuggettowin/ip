@@ -1,6 +1,17 @@
 import java.util.Scanner;
 
 public class Janet {
+
+    private Storage storage;
+    private TaskList tasks;
+    private Ui ui;
+
+    private static String filePath = "data/tasks.txt";
+
+    public Janet() {
+        this.tasks = new TaskList();
+    }
+
     private static final String GREETING = "Hi! I'm Janet, your friendly informational assistant. Let me know what you need!";
     private static final String BANNER = """
                   ⠀ ⠘⠒⠖⠲⠒⠖⠲⠒⠖⠲⠒⠖⠲⢤⣀⠀
@@ -20,11 +31,10 @@ public class Janet {
     public static void main() {
         System.out.printf("%s\n%s\n", Janet.BANNER, Janet.GREETING);
         Scanner sc = new Scanner(System.in);
-        TaskList taskList = new TaskList();
-        Janet.processLoop(sc, taskList);
+        new Janet().processLoop(sc);
     }
 
-    private static void processLoop(Scanner sc, TaskList taskList) {
+    private void processLoop(Scanner sc) {
         while (true) {
             String currLine = sc.nextLine().trim();
             System.out.printf("Current line: %s\n", currLine);
