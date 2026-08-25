@@ -51,6 +51,16 @@ public class Event extends Task {
     }
 
     @Override
+    public String toFileFormat() {
+        return String.join(
+                Task.FILE_DELIMITER,
+                super.toFileFormat(),
+                this.from.toString(),
+                this.to.toString()
+        );
+    }
+
+    @Override
     public String toString() {
         return String.format("%s (from: %s to: %s)",
                 super.toString(),

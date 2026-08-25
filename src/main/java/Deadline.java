@@ -42,6 +42,11 @@ public class Deadline extends Task {
     }
 
     @Override
+    public String toFileFormat() {
+        return String.join(Task.FILE_DELIMITER, super.toFileFormat(), this.deadline.toString());
+    }
+
+    @Override
     public String toString() {
         return String.format(
                 "%s (by: %s)",
