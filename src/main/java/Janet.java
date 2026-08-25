@@ -1,8 +1,8 @@
 import java.util.Scanner;
 
 public class Janet {
-    private static final String greeting = "Hi! I'm Janet, your friendly informational assistant. Let me know what you need!";
-    private static final String banner = """
+    private static final String GREETING = "Hi! I'm Janet, your friendly informational assistant. Let me know what you need!";
+    private static final String BANNER = """
                   ⠀ ⠘⠒⠖⠲⠒⠖⠲⠒⠖⠲⠒⠖⠲⢤⣀⠀
                 ⠀⠀⠀⣀⣴⠦⠠⣤⠤⠤⠤⠤⠤⠤⠤⠤⠤⣤⠈⣆
                 ⠀⣰⡾⠋⠀⠀⠀⣻⠀⠀⠀⠀⣖⣳⠀⠀⠀⣽⠀⣸
@@ -17,8 +17,8 @@ public class Janet {
     private static final String goodbye = "Bye! Take it sleazy!";
     private static final String exitWord = "bye";
 
-    public static void main(String[] args) {
-        System.out.printf("%s\n%s\n", Janet.banner, Janet.greeting);
+    public static void main() {
+        System.out.printf("%s\n%s\n", Janet.BANNER, Janet.GREETING);
         Scanner sc = new Scanner(System.in);
         TaskList taskList = new TaskList();
         Janet.processLoop(sc, taskList);
