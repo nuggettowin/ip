@@ -52,6 +52,10 @@ public class Event extends Task {
 
     @Override
     public String toString() {
-        return String.format("%s (from: %s to: %s)", super.toString(), this.from, this.to);
+        return String.format("%s (from: %s to: %s)",
+                super.toString(),
+                this.from.format(Event.dateTimeFormat),
+                this.to.format(Event.dateTimeFormat)
+        );
     }
 }
