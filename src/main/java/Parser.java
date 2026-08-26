@@ -1,6 +1,10 @@
-import java.util.function.Function;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.Arrays;
 import java.util.Map;
-import java.util.Optional;
+
+import javax.print.DocFlavor;
 
 public class Parser {
     private final TaskList taskList;
@@ -46,7 +50,23 @@ public class Parser {
     }
 
     private TaskList.CommandResult handleAddDeadlineCommand(String argsLine) throws JanetException {
-        return this.handleAddTaskCommand(new Deadline(false, argsLine));
+        int deadlineIndex = argsLine.indexOf(Deadline.DEADLINE_SEP);
+        if (deadlineIndex == -1) {
+            throw new JanetException("Deadline not found!");
+        }
+        String taskLabel = argsLine.substring(0, deadlineIndex).trim();
+        String deadlineStr = argsLine.substring(deadlineIndex + Deadline.DEADLINE_SEP.length()).trim();
+
+        if (deadlineStr.isEmpty()) {
+            throw new JanetException(String.format("Invalid deadline arguments! Deadline: %s\n", deadlineStr));
+        }
+
+        try {
+            LocalDate deadline = LocalDate.parse(deadlineStr);
+            return this.handleAddTaskCommand(new Deadline(false, taskLabel, deadline));
+        } catch (DateTimeParseException e) {
+            throw new JanetException("Invalid date format");
+        }
     }
 
     private TaskList.CommandResult handleAddEventCommand(String argsLine) throws JanetException {
@@ -59,5 +79,35 @@ public class Parser {
 
     private TaskList.CommandResult handleDeleteTaskCommand(String argsLine) throws JanetException {
         return this.taskList.deleteTask(Integer.parseInt(argsLine));
+    }
+
+    public TaskList.CommandResult processStorageCommand(String storageCommand, String sep) throws JanetException {
+        String[] args = storageCommand.split(sep);
+        String taskType = args[0];
+        boolean isDone = Integer.parseInt(args[1]) == 1;
+        String taskLabel = args[2];
+
+        if (taskType == "T") {
+            return this.handleStorageAddTodo();
+        } else if (taskType == "D") {
+            return this.handleStorageAddDeadline();
+        } else {
+            return this.handleStorageAddEvent();
+        }
+        return this.commandMap.get(taskType).handle(remainingArgs);
+
+    }
+
+    private TaskList.CommandResult handleStorageAddTodo(String isDone, String taskLabel) throws JanetException {
+        return this.taskList.addTask(new Todo(isDone.equals("1"), taskLabel));
+    }
+
+    private TaskList.CommandResult handleStorageAddDeadline(boolean isDone, String taskLabel, ) throws JanetException {
+
+        return this.taskList.addTask(new Deadline(isDone.equals("1"), remainingArgs));
+    }
+
+    private TaskList.CommandResult handleStorageAddEvent(String storageCommand, String sep) {
+        return this.taskList.addTask(new Todo(isDone.equals("1"), taskLabel));
     }
 }
