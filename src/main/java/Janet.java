@@ -29,7 +29,11 @@ public class Janet {
     private void run() throws FileNotFoundException {
         this.ui.showGreeting();
         Scanner sc = new Scanner(System.in);
-        System.out.println(this.storage.readFromFile());
+        try {
+            System.out.println(this.storage.readFromFile());
+        } catch (JanetException e) {
+            System.out.printf("Failure: %s\n", e.toString());
+        }
 
         while (true) {
             String currLine = sc.nextLine().trim();

@@ -97,6 +97,7 @@ public class Parser {
         return this.taskList.deleteTask(Integer.parseInt(argsLine));
     }
 
+    // TODO this is stupid but fix later
     public TaskList.CommandResult processStorageCommand(String storageCommand) throws JanetException {
         String[] argsArr = storageCommand.split(Storage.LINE_SEP);
         String taskType = argsArr[0];
