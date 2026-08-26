@@ -55,22 +55,42 @@ public class Parser {
             throw new JanetException("Deadline not found!");
         }
         String taskLabel = argsLine.substring(0, deadlineIndex).trim();
-        String deadlineStr = argsLine.substring(deadlineIndex + Deadline.DEADLINE_SEP.length()).trim();
+        String deadline = argsLine.substring(deadlineIndex + Deadline.DEADLINE_SEP.length()).trim();
 
-        if (deadlineStr.isEmpty()) {
-            throw new JanetException(String.format("Invalid deadline arguments! Deadline: %s\n", deadlineStr));
+        if (deadline.isEmpty()) {
+            throw new JanetException(String.format("Invalid deadline arguments! Deadline: %s\n", deadline));
         }
 
         try {
-            LocalDate deadline = LocalDate.parse(deadlineStr);
-            return this.handleAddTaskCommand(new Deadline(false, taskLabel, deadline));
+            LocalDate deadlineDate = LocalDate.parse(deadline);
+            return this.handleAddTaskCommand(new Deadline(false, taskLabel, deadlineDate));
         } catch (DateTimeParseException e) {
             throw new JanetException("Invalid date format");
         }
     }
 
     private TaskList.CommandResult handleAddEventCommand(String argsLine) throws JanetException {
-        return this.handleAddTaskCommand(new Event(false, argsLine));
+        int fromIndex = argsLine.indexOf(Event.FROM_SEP);
+        int toIndex = argsLine.indexOf(Event.TO_SEP);
+
+        if (fromIndex == -1 || toIndex == -1) {
+            throw new JanetException("From or To not found!");
+        }
+        String taskLabel = argsLine.substring(0, fromIndex).trim();
+        String from = argsLine.substring(fromIndex + Event.FROM_SEP.length(), toIndex).trim();
+        String to = argsLine.substring(toIndex + Event.TO_SEP.length()).trim();
+
+        if (from.isEmpty() || to.isEmpty()) {
+            throw new JanetException(String.format("Invalid event arguments! From: %s, to: %s\n", from, to));
+        }
+
+        try {
+            LocalDate fromDate = LocalDate.parse(from);
+            LocalDate toDate = LocalDate.parse(to);
+            return this.handleAddTaskCommand(new Event(false, taskLabel, fromDate, toDate));
+        } catch (DateTimeParseException e) {
+            throw new JanetException("Invalid date format");
+        }
     }
 
     private TaskList.CommandResult handleAddTaskCommand(Task task) {

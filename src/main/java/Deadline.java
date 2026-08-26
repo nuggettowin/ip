@@ -11,8 +11,8 @@ public class Deadline extends Task {
             DateTimeFormatter.ofPattern("MMM d yyyy");
 
     public Deadline(boolean isDone, String taskLabel, LocalDate deadline) throws JanetException {
-        this.deadline = deadline
         super(isDone, Deadline.TASK_TYPE, taskLabel);
+        this.deadline = deadline
     }
 
     @Override
