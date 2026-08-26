@@ -1,3 +1,5 @@
+package janet;
+
 public class JanetException extends Exception {
     public JanetException(String message) {
         super(message);

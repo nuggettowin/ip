@@ -1,3 +1,5 @@
+package janet;
+
 public class Ui {
     private static final String GREETING = "Hi! I'm Janet, your friendly informational assistant. Let me know what you need!";
     private static final String BANNER = """

@@ -1,3 +1,5 @@
+package janet;
+
 public abstract class Task {
     private final boolean isDone;
     protected final String taskType;
