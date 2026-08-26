@@ -8,7 +8,9 @@ import java.util.stream.IntStream;
 public class TaskList {
     private final List<Task> tasks;
     private static final String success_message = "Added ";
-    public record CommandResult(Optional<TaskList> updatedTaskList, String message) {}
+
+    public record CommandResult(Optional<TaskList> updatedTaskList, String message) {
+    }
 
     public TaskList() {
         this.tasks = List.of();
@@ -52,6 +54,19 @@ public class TaskList {
 
         return new CommandResult(
                 Optional.of(this), retString.orElse("No tasks listed!")
+        );
+    }
+
+    public CommandResult findTasks(String searchTerm) {
+        Optional<String> retString = IntStream.range(1, this.tasks.size() + 1)
+                .mapToObj(i -> Integer.toString(i) + ". " + this.tasks.get(i - 1))
+                .filter(x -> x.contains(searchTerm))
+                .reduce((a, b) -> a + "\n" + b);
+
+        return new CommandResult(
+                Optional.of(this),
+                retString.map(x -> "Here are your matching tasks!\n" + x)
+                        .orElse("No tasks listed!")
         );
     }
 

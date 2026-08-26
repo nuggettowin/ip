@@ -11,6 +11,7 @@ public class Parser {
             String,
             CommandHandler> commandMap = Map.of(
             "list", this::handleListTasksCommand,
+            "find", this::handleFindTasksCommand,
             "mark", this::handleMarkTaskCommand,
             "todo", this::handleAddTodoCommand,
             "deadline", this::handleAddDeadlineCommand,
@@ -40,6 +41,10 @@ public class Parser {
 
     private TaskList.CommandResult handleListTasksCommand(String argsLine) {
         return this.taskList.listTasks();
+    }
+
+    private TaskList.CommandResult handleFindTasksCommand(String argsLine) {
+        return this.taskList.findTasks(argsLine);
     }
 
     private TaskList.CommandResult handleMarkTaskCommand(String argsLine) throws JanetException {
