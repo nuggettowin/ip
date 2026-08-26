@@ -12,7 +12,7 @@ public class Deadline extends Task {
 
     public Deadline(boolean isDone, String taskLabel, LocalDate deadline) throws JanetException {
         super(isDone, Deadline.TASK_TYPE, taskLabel);
-        this.deadline = deadline
+        this.deadline = deadline;
     }
 
     @Override

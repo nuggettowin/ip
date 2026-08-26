@@ -1,10 +1,6 @@
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.Arrays;
 import java.util.Map;
-
-import javax.print.DocFlavor;
 
 public class Parser {
     private final TaskList taskList;
@@ -101,33 +97,28 @@ public class Parser {
         return this.taskList.deleteTask(Integer.parseInt(argsLine));
     }
 
-    public TaskList.CommandResult processStorageCommand(String storageCommand, String sep) throws JanetException {
-        String[] args = storageCommand.split(sep);
-        String taskType = args[0];
-        boolean isDone = Integer.parseInt(args[1]) == 1;
-        String taskLabel = args[2];
-
-        if (taskType == "T") {
-            return this.handleStorageAddTodo();
-        } else if (taskType == "D") {
-            return this.handleStorageAddDeadline();
-        } else {
-            return this.handleStorageAddEvent();
-        }
-        return this.commandMap.get(taskType).handle(remainingArgs);
+    public TaskList.CommandResult processStorageCommand(String storageCommand) throws JanetException {
+        String[] argsArr = storageCommand.split(Storage.LINE_SEP);
+        String taskType = argsArr[0];
+        return this.commandMap.get(taskType).handle(storageCommand);
 
     }
 
-    private TaskList.CommandResult handleStorageAddTodo(String isDone, String taskLabel) throws JanetException {
-        return this.taskList.addTask(new Todo(isDone.equals("1"), taskLabel));
+    private TaskList.CommandResult handleStorageAddTodo(String storageCommand) throws JanetException {
+        String[] argsArr = storageCommand.split(Storage.LINE_SEP);
+        return this.taskList.addTask(new Todo(argsArr[1].equals("1"), argsArr[2]));
     }
 
-    private TaskList.CommandResult handleStorageAddDeadline(boolean isDone, String taskLabel, ) throws JanetException {
-
-        return this.taskList.addTask(new Deadline(isDone.equals("1"), remainingArgs));
+    private TaskList.CommandResult handleStorageAddDeadline(String storageCommand) throws JanetException {
+        String[] argsArr = storageCommand.split(Storage.LINE_SEP);
+        LocalDate deadlineDate = LocalDate.parse(argsArr[3]);
+        return this.taskList.addTask(new Deadline(argsArr[1].equals("1"), argsArr[2], deadlineDate));
     }
 
-    private TaskList.CommandResult handleStorageAddEvent(String storageCommand, String sep) {
-        return this.taskList.addTask(new Todo(isDone.equals("1"), taskLabel));
+    private TaskList.CommandResult handleStorageAddEvent(String storageCommand) throws JanetException {
+        String[] argsArr = storageCommand.split(Storage.LINE_SEP);
+        LocalDate fromDate = LocalDate.parse(argsArr[3]);
+        LocalDate toDate = LocalDate.parse(argsArr[4]);
+        return this.taskList.addTask(new Event(argsArr[1].equals("1"), argsArr[2], fromDate, toDate));
     }
 }

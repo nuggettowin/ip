@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class Storage {
     private File file;
-    private static final String LINE_SEP = "|";
+    protected static final String LINE_SEP = "|";
 
     // handle the case where data file or folder doesn't exist at the start
     public Storage(String filePath) throws IOException {
@@ -23,12 +23,14 @@ public class Storage {
 
     public TaskList readFromFile() throws FileNotFoundException, JanetException {
         Scanner sc = new Scanner(this.file);
-        StringBuilder ret = new StringBuilder();
         TaskList taskList = new TaskList();
         while (sc.hasNextLine()) {
             Parser parser = new Parser(taskList);
             String currLine = sc.nextLine();
-            taskList = parser.processStorageCommand(currLine, Storage.LINE_SEP);
+            taskList = parser
+                    .processStorageCommand(currLine)
+                    .updatedTaskList()
+                    .orElse(taskList);
         }
         return taskList;
     }
