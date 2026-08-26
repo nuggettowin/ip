@@ -13,7 +13,10 @@ public class Parser {
             "todo", this::handleAddTodoCommand,
             "deadline", this::handleAddDeadlineCommand,
             "event", this::handleAddEventCommand,
-            "delete", this::handleDeleteTaskCommand
+            "delete", this::handleDeleteTaskCommand,
+            "T", this::handleStorageAddTodo,
+            "D", this::handleStorageAddDeadline,
+            "E", this::handleStorageAddEvent
     );
 
     public Parser(TaskList taskList) {

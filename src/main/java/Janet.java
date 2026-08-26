@@ -4,9 +4,9 @@ import java.util.Scanner;
 
 public class Janet {
 
-    private Storage storage;
+    private final Storage storage;
     private TaskList tasks;
-    private Ui ui;
+    private final Ui ui;
 
     private static final String exitWord = "bye";
     private static final String FILE_PATH = "data/tasks.txt";
@@ -30,7 +30,7 @@ public class Janet {
         this.ui.showGreeting();
         Scanner sc = new Scanner(System.in);
         try {
-            System.out.println(this.storage.readFromFile());
+            this.tasks = this.storage.readFromFile();
         } catch (JanetException e) {
             System.out.printf("Failure: %s\n", e.toString());
         }

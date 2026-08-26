@@ -3,10 +3,11 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 public class Storage {
     private File file;
-    protected static final String LINE_SEP = "|";
+    protected static final String LINE_SEP = Pattern.quote("|");
 
     // handle the case where data file or folder doesn't exist at the start
     public Storage(String filePath) throws IOException {
