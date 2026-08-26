@@ -1,3 +1,5 @@
+package janet;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
@@ -73,5 +75,14 @@ public class TaskList {
         );
 
         return new CommandResult(Optional.of(retTaskList), String.format("%d marked!\n", pos));
+    }
+
+    // also used as file format
+    @Override
+    public String toString() {
+        return this.tasks.stream()
+                .map(x -> x.toFileFormat())
+                .reduce((a, b) -> a + "\n" + b)
+                .orElse("");
     }
 }

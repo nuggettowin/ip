@@ -1,3 +1,5 @@
+package janet;
+
 import java.util.Optional;
 
 @FunctionalInterface

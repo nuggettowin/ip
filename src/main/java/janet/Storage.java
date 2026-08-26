@@ -1,12 +1,15 @@
+package janet;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
-import java.util.stream.Stream;
+import java.util.regex.Pattern;
 
 public class Storage {
     private File file;
+    protected static final String LINE_SEP = Pattern.quote("|");
 
     // handle the case where data file or folder doesn't exist at the start
     public Storage(String filePath) throws IOException {
@@ -21,12 +24,17 @@ public class Storage {
         fw.close();
     }
 
-    public String readFromFile() throws FileNotFoundException {
+    public TaskList readFromFile() throws FileNotFoundException, JanetException {
         Scanner sc = new Scanner(this.file);
-        StringBuilder ret = new StringBuilder();
+        TaskList taskList = new TaskList();
         while (sc.hasNextLine()) {
-            ret.append(sc.nextLine()).append("\n");
+            Parser parser = new Parser(taskList);
+            String currLine = sc.nextLine();
+            taskList = parser
+                    .processStorageCommand(currLine)
+                    .updatedTaskList()
+                    .orElse(taskList);
         }
-        return ret.toString();
+        return taskList;
     }
 }

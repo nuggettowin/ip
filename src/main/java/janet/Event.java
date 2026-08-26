@@ -1,0 +1,47 @@
+package janet;
+
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.time.LocalDate;
+
+public class Event extends Task {
+    private final LocalDate from;
+    private final LocalDate to;
+    private static final String TASK_TYPE = "E";
+    protected final static String FROM_SEP = "/from";
+    protected final static String TO_SEP = "/to";
+    private final static DateTimeFormatter dateTimeFormat =
+            DateTimeFormatter.ofPattern("MMM d yyyy");
+
+    // TODO: handle case where start > end
+    public Event(boolean isDone, String taskLabel, LocalDate from, LocalDate to) throws JanetException {
+        super(isDone, Event.TASK_TYPE, taskLabel);
+        this.from = from;
+        this.to = to;
+    }
+
+
+    @Override
+    public Task markDone() throws JanetException {
+        return new Event(true, super.taskLabel, this.from, this.to);
+    }
+
+    @Override
+    public String toFileFormat() {
+        return String.join(
+                Task.FILE_DELIMITER,
+                super.toFileFormat(),
+                this.from.toString(),
+                this.to.toString()
+        );
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%s (from: %s to: %s)",
+                super.toString(),
+                this.from.format(Event.dateTimeFormat),
+                this.to.format(Event.dateTimeFormat)
+        );
+    }
+}
