@@ -4,45 +4,36 @@ import java.util.Scanner;
 
 public class Janet {
 
-    private Storage storage;
+    private final Storage storage;
     private TaskList tasks;
-    private Ui ui;
+    private final Ui ui;
 
+    private static final String exitWord = "bye";
     private static final String FILE_PATH = "data/tasks.txt";
 
     public Janet() throws IOException {
         this.tasks = new TaskList();
         this.storage = new Storage(Janet.FILE_PATH);
+        this.ui = new Ui();
     }
 
-    private static final String GREETING = "Hi! I'm Janet, your friendly informational assistant. Let me know what you need!";
-    private static final String BANNER = """
-                  ⠀ ⠘⠒⠖⠲⠒⠖⠲⠒⠖⠲⠒⠖⠲⢤⣀⠀
-                ⠀⠀⠀⣀⣴⠦⠠⣤⠤⠤⠤⠤⠤⠤⠤⠤⠤⣤⠈⣆
-                ⠀⣰⡾⠋⠀⠀⠀⣻⠀⠀⠀⠀⣖⣳⠀⠀⠀⣽⠀⣸
-                ⣰⠏⠖⣀⠀⠀⠀⣯⠀⠀⠀⠀⠀⠀⠀⠀⣰⢃⡴⠃
-                ⡇⠀⠀⠈⣳⣄⢀⡽⢤⡤⢤⡤⣤⠤⠔⠚⠉⠁⠀⠀
-                ⢭⣀⣀⡀⢠⠎⠛⠀⠀⠀⡎⠱⡌⢢⠀⠀⠀⠀⠀⠀
-                ⣽⠀⠀⠀⣇⠀⠀⠀⠀⠀⠇⠀⠇⠸⠀⠀⠀⠀⠀⠀
-                ⢻⣦⡠⠐⣇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-                ⠀⠈⠳⣎⠙⠢⣄⠀⠀⢀⣤⠴⡶⠀⠀⠀⠀⠀⠀⠀
-                ⠀⠀⠀⠈⠓⠶⠤⣉⣹⣁⣀⣋⣧⠀⠀⠀⠀⠀⠀⠀
-            """;
-    private static final String goodbye = "Bye! Take it sleazy!";
-    private static final String exitWord = "bye";
 
     public static void main(String[] args) {
-        System.out.printf("%s\n%s\n", Janet.BANNER, Janet.GREETING);
-        Scanner sc = new Scanner(System.in);
         try {
-             new Janet().run(sc);
+             new Janet().run();
         } catch (IOException e) {
             System.out.println(e);
         }
     }
 
-    private void run(Scanner sc) throws FileNotFoundException {
-        System.out.println(this.storage.readFromFile());
+    private void run() throws FileNotFoundException {
+        this.ui.showGreeting();
+        Scanner sc = new Scanner(System.in);
+        try {
+            this.tasks = this.storage.readFromFile();
+        } catch (JanetException e) {
+            System.out.printf("Failure: %s\n", e.toString());
+        }
 
         while (true) {
             String currLine = sc.nextLine().trim();
@@ -57,7 +48,11 @@ public class Janet {
                 this.tasks = res.updatedTaskList().orElse(this.tasks);
                 System.out.println(res.message());
 
-                this.storage.writeToFile(res.updatedTaskList().toString());
+                this.storage.writeToFile(
+                        res.updatedTaskList()
+                        .map(x -> x.toString())
+                        .orElse(new TaskList().toString())
+                );
             } catch (IOException e) {
                 System.out.printf("IO Failure: %s\n", e.toString());
             } catch (JanetException e) {
@@ -65,6 +60,6 @@ public class Janet {
             }
 
         }
-        System.out.printf("%s\n", goodbye);
+        this.ui.showGoodbye();
     }
 }
