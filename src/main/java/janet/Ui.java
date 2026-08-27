@@ -8,6 +8,14 @@ public class Ui {
         System.out.printf("%s\n%s\n", Ui.GREETING);
     }
 
+    public void showMessage(String message) {
+        System.out.println(message);
+    }
+
+    public void showError(String errorMessage) {
+        System.out.println(errorMessage);
+    }
+
     public void showGoodbye() {
         System.out.printf(Ui.goodbye);
     }
