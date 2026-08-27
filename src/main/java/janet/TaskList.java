@@ -34,7 +34,7 @@ public class TaskList {
     public CommandResult deleteTask(int pos) throws JanetException {
         if (pos < 1 || pos > this.tasks.size()) {
             throw new JanetException(
-                    String.format("Deletion out of index! Current list size: %d", this.tasks.size())
+                    String.format("Deletion out of index!")
             );
         }
         TaskList retTaskList = new TaskList(
@@ -66,14 +66,14 @@ public class TaskList {
         return new CommandResult(
                 Optional.of(this),
                 retString.map(x -> "Here are your matching tasks!\n" + x)
-                        .orElse("No tasks listed!")
+                        .orElse("No tasks found!")
         );
     }
 
     public CommandResult markTask(int pos) throws JanetException {
         if (pos < 1 || pos > this.tasks.size()) {
             throw new JanetException(
-                    String.format("Deletion out of index! Current list size: %d", this.tasks.size())
+                    String.format("No mark index ")
             );
         }
         List<Task> front = this.tasks.subList(0, pos - 1);
