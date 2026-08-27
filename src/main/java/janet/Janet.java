@@ -14,8 +14,8 @@ public class Janet {
     private static final String FILE_PATH = "data/tasks.txt";
 
     public Janet() throws IOException {
-        this.tasks = new TaskList();
         this.storage = new Storage(Janet.FILE_PATH);
+        this.tasks = new TaskList();
         this.ui = new Ui();
     }
 
@@ -34,12 +34,11 @@ public class Janet {
         try {
             this.tasks = this.storage.readFromFile();
         } catch (JanetException e) {
-            System.out.printf("Failure: %s\n", e.toString());
+            this.ui.showError(String.format("Failure: %s\n", e.toString()));
         }
 
         while (true) {
             String currLine = sc.nextLine().trim();
-            System.out.printf("Current line: %s\n", currLine);
 
             if (currLine.equals(exitWord)) {
                 break;
@@ -48,7 +47,7 @@ public class Janet {
             try {
                 TaskList.CommandResult res = new Parser(this.tasks).processCommand(currLine);
                 this.tasks = res.updatedTaskList().orElse(this.tasks);
-                System.out.println(res.message());
+                this.ui.showMessage(res.message());
 
                 this.storage.writeToFile(
                         res.updatedTaskList()
@@ -56,9 +55,9 @@ public class Janet {
                         .orElse(new TaskList().toString())
                 );
             } catch (IOException e) {
-                System.out.printf("IO Failure: %s\n", e.toString());
+                this.ui.showError(String.format("IO Failure: %s\n", e.toString()));
             } catch (JanetException e) {
-                System.out.printf("Failure: %s\n", e.toString());
+                this.ui.showError(String.format("Failure: %s\n", e.toString()));
             }
 
         }
