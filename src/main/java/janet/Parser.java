@@ -4,6 +4,9 @@ import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.Map;
 
+/**
+ * Parses user commands and maps them to their corresponding task operations.
+ */
 public class Parser {
     private final TaskList taskList;
 
@@ -22,10 +25,22 @@ public class Parser {
             "E", this::handleStorageAddEvent
     );
 
+    /**
+     * Creates a parser for the specified task list.
+     *
+     * @param taskList Task list to be modified by parsed commands.
+     */
     public Parser(TaskList taskList) {
         this.taskList = taskList;
     }
 
+    /**
+     * Processes a command entered by the user and returns the corresponding result.
+     *
+     * @param currLine Command and arguments to process.
+     * @return Result of processing the command.
+     * @throws JanetException If the command is not recognized or cannot be processed.
+     */
     public TaskList.CommandResult processCommand(String currLine) throws JanetException {
         String command = currLine.split("\\s+")[0].trim();
         String argsLine = currLine.substring(command.length()).trim(); // remaining string
@@ -76,15 +91,15 @@ public class Parser {
     }
 
     private TaskList.CommandResult handleAddEventCommand(String argsLine) throws JanetException {
-        int fromIndex = argsLine.indexOf(Event.FROM_SEP);
-        int toIndex = argsLine.indexOf(Event.TO_SEP);
+        int fromIndex = argsLine.indexOf(Event.EVENT_FROM_SEP);
+        int toIndex = argsLine.indexOf(Event.EVENT_TO_SEP);
 
         if (fromIndex == -1 || toIndex == -1) {
             throw new JanetException("From or To not found!");
         }
         String taskLabel = argsLine.substring(0, fromIndex).trim();
-        String from = argsLine.substring(fromIndex + Event.FROM_SEP.length(), toIndex).trim();
-        String to = argsLine.substring(toIndex + Event.TO_SEP.length()).trim();
+        String from = argsLine.substring(fromIndex + Event.EVENT_FROM_SEP.length(), toIndex).trim();
+        String to = argsLine.substring(toIndex + Event.EVENT_TO_SEP.length()).trim();
 
         if (from.isEmpty() || to.isEmpty()) {
             throw new JanetException(String.format("Invalid event arguments! From: %s, to: %s\n", from, to));

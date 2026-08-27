@@ -1,19 +1,27 @@
 package janet;
 
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.time.LocalDate;
 
+/**
+ * Represents a task that takes place over a specified period.
+ */
 public class Event extends Task {
+
     private final LocalDate from;
     private final LocalDate to;
     private static final String TASK_TYPE = "E";
-    protected final static String FROM_SEP = "/from";
-    protected final static String TO_SEP = "/to";
-    private final static DateTimeFormatter dateTimeFormat =
+    protected static final String EVENT_FROM_SEP = "/from";
+    protected static final String EVENT_TO_SEP = "/to";
+    private static final DateTimeFormatter DATE_TIME_FORMAT =
             DateTimeFormatter.ofPattern("MMM d yyyy");
 
     // TODO: handle case where start > end
+    /**
+     * Creates a <code>Todo</code> task type
+     * with the specified completion status, type, label, starting date, and end date.
+     * @throws JanetException If the task label is empty.
+     */
     public Event(boolean isDone, String taskLabel, LocalDate from, LocalDate to) throws JanetException {
         super(isDone, Event.TASK_TYPE, taskLabel);
         this.from = from;
@@ -40,8 +48,8 @@ public class Event extends Task {
     public String toString() {
         return String.format("%s (from: %s to: %s)",
                 super.toString(),
-                this.from.format(Event.dateTimeFormat),
-                this.to.format(Event.dateTimeFormat)
+                this.from.format(Event.DATE_TIME_FORMAT),
+                this.to.format(Event.DATE_TIME_FORMAT)
         );
     }
 }
