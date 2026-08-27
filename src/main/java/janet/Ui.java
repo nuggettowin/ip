@@ -4,14 +4,17 @@ package janet;
  * Handles displaying messages and other user interface output for Janer.
  */
 public class Ui {
-    private static final String GREETING = "Hi! I'm Janet, your friendly informational assistant. Let me know what you need!";
-    private static final String goodbye = "Bye! Take it sleazy!";
+    private static final String MESSAGE_GREETING = """
+            Hi! I'm Janet, your friendly informational assistant.
+            Let me know what you need!
+            """;
+    private static final String MESSAGE_GOODBYE = "Bye! Take it sleazy!";
 
     /**
      * Displays the greeting message when Janet starts.
      */
     public void showGreeting() {
-        System.out.printf("%s\n%s\n", Ui.GREETING);
+        System.out.printf("%s\n%s\n", Ui.MESSAGE_GREETING);
     }
 
 
@@ -33,6 +36,6 @@ public class Ui {
      * Displays the goodbye message when Janet exits.
      */
     public void showGoodbye() {
-        System.out.printf(Ui.goodbye);
+        System.out.printf(Ui.MESSAGE_GOODBYE);
     }
 }

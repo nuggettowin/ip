@@ -8,7 +8,7 @@ public abstract class Task {
     private final boolean isDone;
     protected final String taskType;
     protected final String taskLabel;
-    protected static String FILE_DELIMITER = "|";
+    protected static final String FILE_DELIMITER = "|";
 
     /**
      * Creates a task with the specified completion status, type, and label.

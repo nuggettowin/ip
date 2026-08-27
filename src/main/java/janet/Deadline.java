@@ -10,9 +10,9 @@ import java.time.format.DateTimeParseException;
 public class Deadline extends Task {
 
     private final LocalDate deadline;
-    private final static String TASK_TYPE = "D";
-    protected final static String DEADLINE_SEP = "/by";
-    private final static DateTimeFormatter dateTimeFormat =
+    private static final String TASK_TYPE = "D";
+    protected static final String DEADLINE_SEP = "/by";
+    private static final DateTimeFormatter DATE_TIME_FORMAT =
             DateTimeFormatter.ofPattern("MMM d yyyy");
 
     /**
@@ -39,7 +39,7 @@ public class Deadline extends Task {
         return String.format(
                 "%s (by: %s)",
                 super.toString(),
-                this.deadline.format(Deadline.dateTimeFormat)
+                this.deadline.format(Deadline.DATE_TIME_FORMAT)
         );
     }
 }

@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
  */
 public class Storage {
 
-    private File file;
+    private final File file;
     protected static final String LINE_SEP = Pattern.quote("|");
 
     /**
