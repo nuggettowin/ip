@@ -4,6 +4,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
 
+/**
+ * Represents the main application that manages tasks and handles user commands.
+ */
 public class Janet {
 
     private final Storage storage;
@@ -13,13 +16,23 @@ public class Janet {
     private static final String exitWord = "bye";
     private static final String FILE_PATH = "data/tasks.txt";
 
+    /**
+     * Creates a new Janet application and initializes its storage, task list,
+     * and user interface.
+     *
+     * @throws IOException If the task storage cannot be initialized.
+     */
     public Janet() throws IOException {
         this.storage = new Storage(Janet.FILE_PATH);
         this.tasks = new TaskList();
         this.ui = new Ui();
     }
 
-
+    /**
+     * Starts the Janet application.
+     *
+     * @param args Command-line arguments.
+     */
     public static void main(String[] args) {
         try {
              new Janet().run();

@@ -10,8 +10,8 @@ import java.util.stream.IntStream;
  * The user can access elements by their integer index, and search for elements in the list.
  */
 public class TaskList {
+
     private final List<Task> tasks;
-    private static final String success_message = "Added ";
 
     /**
      * Represents the return value of all <code>TaskList</code> operations.

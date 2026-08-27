@@ -4,7 +4,11 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.time.LocalDate;
 
+/**
+ * Represents a task that takes place over a specified period.
+ */
 public class Event extends Task {
+
     private final LocalDate from;
     private final LocalDate to;
     private static final String TASK_TYPE = "E";
@@ -14,6 +18,10 @@ public class Event extends Task {
             DateTimeFormatter.ofPattern("MMM d yyyy");
 
     // TODO: handle case where start > end
+    /**
+     * Creates a <code>Todo</code> task type with the specified completion status, type, label, starting date, and end date.
+     * @throws JanetException If the task label is empty.
+     */
     public Event(boolean isDone, String taskLabel, LocalDate from, LocalDate to) throws JanetException {
         super(isDone, Event.TASK_TYPE, taskLabel);
         this.from = from;

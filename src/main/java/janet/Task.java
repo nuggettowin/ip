@@ -4,6 +4,7 @@ package janet;
  * Represents a task with a completion status, type, and label.
  */
 public abstract class Task {
+
     private final boolean isDone;
     protected final String taskType;
     protected final String taskLabel;

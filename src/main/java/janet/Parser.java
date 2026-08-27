@@ -4,6 +4,9 @@ import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.Map;
 
+/**
+ * Parses user commands and maps them to their corresponding task operations.
+ */
 public class Parser {
     private final TaskList taskList;
 
@@ -22,10 +25,22 @@ public class Parser {
             "E", this::handleStorageAddEvent
     );
 
+    /**
+     * Creates a parser for the specified task list.
+     *
+     * @param taskList Task list to be modified by parsed commands.
+     */
     public Parser(TaskList taskList) {
         this.taskList = taskList;
     }
 
+    /**
+     * Processes a command entered by the user and returns the corresponding result.
+     *
+     * @param currLine Command and arguments to process.
+     * @return Result of processing the command.
+     * @throws JanetException If the command is not recognized or cannot be processed.
+     */
     public TaskList.CommandResult processCommand(String currLine) throws JanetException {
         String command = currLine.split("\\s+")[0].trim();
         String argsLine = currLine.substring(command.length()).trim(); // remaining string
