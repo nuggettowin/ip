@@ -1,5 +1,8 @@
 package janet;
 
+/**
+ * Represents a <code>Task</code> that can be completed with no deadline.
+ */
 public class Todo extends Task {
     private static final String TASK_TYPE = "T";
 
