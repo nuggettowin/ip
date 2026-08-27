@@ -5,21 +5,42 @@ import java.util.Optional;
 import java.util.stream.Stream;
 import java.util.stream.IntStream;
 
+/**
+ * An ordered unmodifiable collection of <code>Task</code> elements.
+ * The user can access elements by their integer index, and search for elements in the list.
+ */
 public class TaskList {
     private final List<Task> tasks;
     private static final String success_message = "Added ";
 
+    /**
+     * Represents the return value of all <code>TaskList</code> operations.
+     * A <code>CommandResult</code> corresponds to the new TaskList (if any) and a string representation of the operation.
+     * @param updatedTaskList
+     * @param message
+     */
     public record CommandResult(Optional<TaskList> updatedTaskList, String message) {
     }
 
+    /**
+     * Creates an empty TaskList.
+     */
     public TaskList() {
         this.tasks = List.of();
     }
 
+    /**
+     * Creates an TaskList using the provided <code>List</code> of tasks.
+     */
     public TaskList(List<Task> tasks) {
         this.tasks = tasks;
     }
 
+    /**
+     * Returns a new <code>CommandResult</code> with the <code>Task</code> appended to the previous <code>TaskList</code>.
+     * @param task <code>Task</code> to be appended.
+     * @return A <code>CommandResult</code> containing an updated <code>TaskList</code> and operation message.
+     */
     public CommandResult addTask(Task task) {
         List<Task> addedTask = Stream.concat(
                         this.tasks.stream(),
@@ -31,6 +52,13 @@ public class TaskList {
         );
     }
 
+    /**
+     * Deletes the task at the specified position and returns an updated <code>TaskList</code>
+     *
+     * @param pos The one-based position of the task to delete.
+     * @return A <code>CommandResult</code> containing the updated <code>TaskList</code> and operation message.
+     * @throws <code>JanetException</code> If the specified position is outside the TaskList.
+     */
     public CommandResult deleteTask(int pos) throws JanetException {
         if (pos < 1 || pos > this.tasks.size()) {
             throw new JanetException(
@@ -47,6 +75,11 @@ public class TaskList {
         return new CommandResult(Optional.of(retTaskList), String.format("%d deleted!", pos));
     }
 
+    /**
+     * Lists all tasks currently stored in the <code>TaskList</code>.
+     *
+     * @return A <code>CommandResult</code> containing the current <code>TaskList</code> and formatted list.
+     */
     public CommandResult listTasks() {
         Optional<String> retString = IntStream.range(1, this.tasks.size() + 1)
                 .mapToObj(i -> Integer.toString(i) + ". " + this.tasks.get(i - 1))
@@ -57,6 +90,12 @@ public class TaskList {
         );
     }
 
+    /**
+     * Lists all tasks currently stored in the <code>TaskList</code> and matching the provided searchTerm
+     * Matches occur when the searchTerm is a substring of the task label.
+     *
+     * @return A <code>CommandResult</code> containing the current <code>TaskList</code> and formatted result.
+     */
     public CommandResult findTasks(String searchTerm) {
         Optional<String> retString = IntStream.range(1, this.tasks.size() + 1)
                 .mapToObj(i -> Integer.toString(i) + ". " + this.tasks.get(i - 1))
@@ -70,6 +109,12 @@ public class TaskList {
         );
     }
 
+    /**
+     * Marks the task at the specified position as done.
+     *
+     * @return A <code>CommandResult</code> containing the updated <code>TaskList</code> and operation message.
+     * @throws JanetException If the specified position is outside the <code>TaskList</code>.
+     */
     public CommandResult markTask(int pos) throws JanetException {
         if (pos < 1 || pos > this.tasks.size()) {
             throw new JanetException(
