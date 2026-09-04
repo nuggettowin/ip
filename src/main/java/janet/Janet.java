@@ -76,4 +76,8 @@ public class Janet {
         }
         this.ui.showGoodbye();
     }
+
+    public static String getResponse(String input) {
+
+    }
 }

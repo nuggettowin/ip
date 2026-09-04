@@ -14,7 +14,7 @@ public class Ui {
      * Displays the greeting message when Janet starts.
      */
     public void showGreeting() {
-        System.out.printf("%s\n%s\n", Ui.MESSAGE_GREETING);
+        System.out.printf("%s\n", Ui.MESSAGE_GREETING);
     }
 
 
