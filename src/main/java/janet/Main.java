@@ -9,7 +9,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 /**
- * A GUI for Duke using FXML.
+ * A GUI for Janet using FXML.
  */
 public class Main extends Application {
 
@@ -27,7 +27,7 @@ public class Main extends Application {
             stage.setScene(scene);
             stage.setMinHeight(220);
             stage.setMinWidth(417);
-            fxmlLoader.<MainWindow>getController().setDuke(janet);  // inject the Duke instance
+            fxmlLoader.<MainWindow>getController().setJanet(janet);  // inject the Janet instance
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
