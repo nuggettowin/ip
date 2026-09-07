@@ -38,8 +38,8 @@ public class MainWindow extends AnchorPane {
     }
 
     /**
-     * Creates two dialog boxes, one echoing user input and the other containing Janet's reply and then appends them to
-     * the dialog container. Clears the user input after processing.
+     * Creates a new dialog box in response to user input and appends it to the dialog container.
+     * Clears the user input after processing.
      */
     @FXML
     private void handleUserInput() {
