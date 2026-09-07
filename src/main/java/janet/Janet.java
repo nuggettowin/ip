@@ -34,6 +34,7 @@ public class Janet {
      *
      * @param args Command-line arguments.
      * @throws IOException If the task storage cannot be initialized.
+     * @throws JanetException If the task storage is improperly formatted.
      */
     public static void main(String[] args) throws IOException, JanetException {
         new Janet().run();
