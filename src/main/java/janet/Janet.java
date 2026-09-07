@@ -23,23 +23,20 @@ public class Janet {
      *
      * @throws IOException If the task storage cannot be initialized.
      */
-    public Janet() throws IOException {
+    public Janet() throws IOException, JanetException {
         this.storage = new Storage(Janet.FILE_PATH);
-        this.tasks = new TaskList();
         this.ui = new Ui();
+        this.tasks = this.storage.readFromFile();
     }
 
     /**
      * Starts the Janet application.
      *
      * @param args Command-line arguments.
+     * @throws IOException If the task storage cannot be initialized.
      */
-    public static void main(String[] args) {
-        try {
-             new Janet().run();
-        } catch (IOException e) {
-            System.out.println(e);
-        }
+    public static void main(String[] args) throws IOException, JanetException {
+        new Janet().run();
     }
 
     private void run() throws FileNotFoundException {
