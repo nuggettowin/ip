@@ -13,7 +13,8 @@ public class Janet {
     private TaskList tasks;
     private final Ui ui;
 
-    private static final String exitWord = "bye";
+    // TODO: move logic to parser
+    protected static final String EXIT_WORD = "bye";
     private static final String FILE_PATH = "data/tasks.txt";
 
     /**
