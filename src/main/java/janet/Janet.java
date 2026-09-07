@@ -51,20 +51,12 @@ public class Janet {
         while (true) {
             String currLine = sc.nextLine().trim();
 
-            if (currLine.equals(exitWord)) {
+            if (currLine.equals(EXIT_WORD)) {
                 break;
             }
-
             try {
-                TaskList.CommandResult res = new Parser(this.tasks).processCommand(currLine);
-                this.tasks = res.updatedTaskList().orElse(this.tasks);
-                this.ui.showMessage(res.message());
-
-                this.storage.writeToFile(
-                        res.updatedTaskList()
-                        .map(x -> x.toString())
-                        .orElse(new TaskList().toString())
-                );
+                TaskList.CommandResult res = Janet.getResponse(this, currLine);
+                Janet.processCommandResult(this, res);
             } catch (IOException e) {
                 this.ui.showError(String.format("IO Failure: %s\n", e.toString()));
             } catch (JanetException e) {
@@ -75,7 +67,17 @@ public class Janet {
         this.ui.showGoodbye();
     }
 
-    public static String getResponse(String input) {
+    public static TaskList.CommandResult getResponse(Janet janet, String input) throws JanetException {
+        return new Parser(janet.tasks).processCommand(input);
+    }
 
+    public static void processCommandResult(Janet janet, TaskList.CommandResult commandResult) throws IOException {
+        janet.storage.writeToFile(
+                commandResult.updatedTaskList()
+                        .map(x -> x.toString())
+                        .orElse(new TaskList().toString())
+        );
+        janet.tasks = commandResult.updatedTaskList().orElse(janet.tasks);
+        janet.ui.showMessage(commandResult.message());
     }
 }

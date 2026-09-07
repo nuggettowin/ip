@@ -44,11 +44,25 @@ public class MainWindow extends AnchorPane {
     @FXML
     private void handleUserInput() {
         String input = userInput.getText();
-        String response = janet.getResponse(input);
+        if (input.equals(Janet.EXIT_WORD)) {
+            Platform.exit();
+        }
+        try {
+            TaskList.CommandResult response = Janet.getResponse(janet, input);
+            Janet.processCommandResult(janet, response);
+            this.addToDialogContainer(input, response.message());
+        } catch (IOException e) {
+            this.addToDialogContainer(input, String.format("IO failure: %s", e.toString()));
+        } catch (JanetException e) {
+            this.addToDialogContainer(input, e.toString());
+        }
+        userInput.clear();
+    }
+
+    private void addToDialogContainer(String input, String message) {
         dialogContainer.getChildren().addAll(
                 DialogBox.getUserDialog(input, userImage),
                 DialogBox.getJanetDialog(message, dukeImage)
         );
-        userInput.clear();
     }
 }
