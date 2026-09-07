@@ -51,7 +51,7 @@ test {
 }
 
 application {
-    mainClass.set("Launcher")
+    mainClass.set("janet.Launcher")
 }
 
 jar {

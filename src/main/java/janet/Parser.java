@@ -63,7 +63,11 @@ public class Parser {
     }
 
     private TaskList.CommandResult handleMarkTaskCommand(String argsLine) throws JanetException {
-        return this.taskList.markTask(Integer.parseInt(argsLine));
+        try {
+            return this.taskList.markTask(Integer.parseInt(argsLine));
+        } catch (NumberFormatException e) {
+            throw new JanetException("Mark should contain integer!");
+        }
     }
 
     private TaskList.CommandResult handleAddTodoCommand(String argsLine) throws JanetException {
@@ -119,7 +123,11 @@ public class Parser {
     }
 
     private TaskList.CommandResult handleDeleteTaskCommand(String argsLine) throws JanetException {
-        return this.taskList.deleteTask(Integer.parseInt(argsLine));
+        try {
+            return this.taskList.deleteTask(Integer.parseInt(argsLine));
+        } catch (NumberFormatException e) {
+            throw new JanetException("Mark should contain integer!");
+        }
     }
 
     // TODO this is stupid but fix later
