@@ -139,13 +139,6 @@ public class Parser {
         }
     }
 
-    public TaskList.CommandResult processStorageCommand(String storageCommand) throws JanetException {
-        String[] argsArr = storageCommand.split(Storage.LINE_SEP);
-        String taskType = argsArr[0];
-        return this.commandMap.get(taskType).handle(storageCommand);
-
-    }
-
     private TaskList.CommandResult handleStorageAddTodo(String storageCommand) throws JanetException {
         String[] argsArr = storageCommand.split(Storage.LINE_SEP);
         return this.taskList.addTask(new Todo(argsArr[1].equals("1"), argsArr[2]));

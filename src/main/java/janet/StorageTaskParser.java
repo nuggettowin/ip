@@ -19,7 +19,10 @@ public abstract class StorageTaskParser {
     protected final boolean isDone;
     protected final String taskLabel;
     private static final Map<String, Function<TaskField, StorageTaskParser>> taskMap = Map.of(
-            "T", (x) -> new StorageTodoParser(x));
+            "T", (x) -> new StorageTodoParser(x),
+            "D", (x) -> new StorageDeadlineParser(x),
+            "E", (x) -> new StorageEventParser(x)
+    );
 
     public StorageTaskParser(boolean isDone, String taskLabel) {
         this.isDone = isDone;
