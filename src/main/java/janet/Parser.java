@@ -9,7 +9,7 @@ import java.util.Map;
  */
 public class Parser {
     private final TaskList taskList;
-    protected static final String EXIT_WORD = "bye";
+    private static final String EXIT_WORD = "bye";
 
     private final Map<
             String,
