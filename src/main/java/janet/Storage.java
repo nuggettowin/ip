@@ -52,10 +52,9 @@ public class Storage {
         Scanner sc = new Scanner(this.file);
         TaskList taskList = new TaskList();
         while (sc.hasNextLine()) {
-            Parser parser = new Parser(taskList);
             String currLine = sc.nextLine();
-            taskList = parser
-                    .processStorageCommand(currLine)
+            taskList = StorageTaskParser.processBaseTask(currLine)
+                    .processStorageCommand(taskList)
                     .updatedTaskList()
                     .orElse(taskList);
         }
