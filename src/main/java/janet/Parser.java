@@ -9,6 +9,7 @@ import java.util.Map;
  */
 public class Parser {
     private final TaskList taskList;
+    protected static final String EXIT_WORD = "bye";
 
     private final Map<
             String,
@@ -32,6 +33,10 @@ public class Parser {
      */
     public Parser(TaskList taskList) {
         this.taskList = taskList;
+    }
+
+    public static boolean isExitCommand(String currLine) {
+        return currLine.equals(Parser.EXIT_WORD);
     }
 
     /**

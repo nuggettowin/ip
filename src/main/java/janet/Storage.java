@@ -13,6 +13,7 @@ import java.util.regex.Pattern;
 public class Storage {
 
     private final File file;
+    private static final String FILE_PATH = "data/tasks.txt";
     protected static final String LINE_SEP = Pattern.quote("|");
 
     /**
@@ -21,8 +22,8 @@ public class Storage {
      *
      * @throws IOException If the directories or storage file cannot be created.
      */
-    public Storage(String filePath) throws IOException {
-        this.file = new File(filePath);
+    public Storage() throws IOException {
+        this.file = new File(Storage.FILE_PATH);
         file.getParentFile().mkdirs();
         file.createNewFile();
     }
