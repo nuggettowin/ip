@@ -35,6 +35,10 @@ public class Parser {
         this.taskList = taskList;
     }
 
+    public static String formatString(String currLine) {
+        return currLine.trim();
+    }
+
     public static boolean isExitCommand(String currLine) {
         return currLine.equals(Parser.EXIT_WORD);
     }

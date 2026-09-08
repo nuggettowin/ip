@@ -45,13 +45,13 @@ public class Janet {
         }
 
         while (true) {
-            String currLine = sc.nextLine().trim();
+            String formattedLine = Parser.formatString(sc.nextLine());
 
-            if (Parser.isExitCommand(currLine)) {
+            if (Parser.isExitCommand(formattedLine)) {
                 break;
             }
             try {
-                TaskList.CommandResult res = Janet.getResponse(this, currLine);
+                TaskList.CommandResult res = Janet.getResponse(this, formattedLine);
                 Janet.processCommandResult(this, res);
             } catch (IOException e) {
                 this.ui.showError(String.format("IO Failure: %s\n", e.toString()));

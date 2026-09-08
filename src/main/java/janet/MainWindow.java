@@ -44,7 +44,7 @@ public class MainWindow extends AnchorPane {
     @FXML
     private void handleUserInput() {
         String input = userInput.getText();
-        if (input.equals(Janet.EXIT_WORD)) {
+        if (input.equals(Parser.EXIT_WORD)) {
             Platform.exit();
         }
         try {
