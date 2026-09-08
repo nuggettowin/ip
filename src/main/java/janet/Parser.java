@@ -20,10 +20,7 @@ public class Parser {
             "todo", this::handleAddTodoCommand,
             "deadline", this::handleAddDeadlineCommand,
             "event", this::handleAddEventCommand,
-            "delete", this::handleDeleteTaskCommand,
-            "T", this::handleStorageAddTodo,
-            "D", this::handleStorageAddDeadline,
-            "E", this::handleStorageAddEvent
+            "delete", this::handleDeleteTaskCommand
     );
 
     /**
@@ -137,23 +134,5 @@ public class Parser {
         } catch (NumberFormatException e) {
             throw new JanetException("Mark should contain integer!");
         }
-    }
-
-    private TaskList.CommandResult handleStorageAddTodo(String storageCommand) throws JanetException {
-        String[] argsArr = storageCommand.split(Storage.LINE_SEP);
-        return this.taskList.addTask(new Todo(argsArr[1].equals("1"), argsArr[2]));
-    }
-
-    private TaskList.CommandResult handleStorageAddDeadline(String storageCommand) throws JanetException {
-        String[] argsArr = storageCommand.split(Storage.LINE_SEP);
-        LocalDate deadlineDate = LocalDate.parse(argsArr[3]);
-        return this.taskList.addTask(new Deadline(argsArr[1].equals("1"), argsArr[2], deadlineDate));
-    }
-
-    private TaskList.CommandResult handleStorageAddEvent(String storageCommand) throws JanetException {
-        String[] argsArr = storageCommand.split(Storage.LINE_SEP);
-        LocalDate fromDate = LocalDate.parse(argsArr[3]);
-        LocalDate toDate = LocalDate.parse(argsArr[4]);
-        return this.taskList.addTask(new Event(argsArr[1].equals("1"), argsArr[2], fromDate, toDate));
     }
 }

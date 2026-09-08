@@ -14,7 +14,6 @@ public class Storage {
 
     private final File file;
     private static final String FILE_PATH = "data/tasks.txt";
-    protected static final String LINE_SEP = Pattern.quote("|");
 
     /**
      * Creates a storage file at the specified path, creating any missing parent

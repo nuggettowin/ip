@@ -25,7 +25,7 @@ public class MainWindow extends AnchorPane {
     private Janet janet;
 
     private Image userImage = new Image(this.getClass().getResourceAsStream("/images/DaUser.png"));
-    private Image dukeImage = new Image(this.getClass().getResourceAsStream("/images/DaDuke.png"));
+    private Image janetImage = new Image(this.getClass().getResourceAsStream("/images/DaDuke.png"));
 
     @FXML
     public void initialize() {
@@ -63,7 +63,7 @@ public class MainWindow extends AnchorPane {
     private void addToDialogContainer(String input, String message) {
         dialogContainer.getChildren().addAll(
                 DialogBox.getUserDialog(input, userImage),
-                DialogBox.getJanetDialog(message, dukeImage)
+                DialogBox.getJanetDialog(message, janetImage)
         );
     }
 }

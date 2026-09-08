@@ -42,13 +42,13 @@ public class TaskList {
      * @return A <code>CommandResult</code> containing an updated <code>TaskList</code> and operation message.
      */
     public CommandResult addTask(Task task) {
-        List<Task> addedTask = Stream.concat(
+        List<Task> updatedTask = Stream.concat(
                         this.tasks.stream(),
                         Stream.of(task)
                 )
                 .toList();
         return new CommandResult(
-                Optional.of(new TaskList(addedTask)), String.format("%s added!\n", task)
+                Optional.of(new TaskList(updatedTask)), String.format("%s added!\n", task)
         );
     }
 

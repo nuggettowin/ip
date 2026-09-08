@@ -16,7 +16,7 @@ public abstract class Task {
      */
     public Task(boolean isDone, String taskType, String taskLabel) throws JanetException {
         if (taskLabel.isEmpty()) {
-            throw new JanetException("No task description provided!");
+            throw new JanetException("No task label provided!");
         }
         this.isDone = isDone;
         this.taskType = taskType;

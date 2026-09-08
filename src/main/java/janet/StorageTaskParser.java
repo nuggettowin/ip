@@ -3,12 +3,15 @@ package janet;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.function.Function;
+import java.util.regex.Pattern;
 
 /**
  * Handles the fields common to all task-related comments.
  */
 public abstract class StorageTaskParser {
     public record TaskField(boolean isDone, String taskLabel, String[] args) {}
+
+    protected static final String INLINE_SEP = Pattern.quote("|");
 
     private static final int TASK_TYPE_INDEX = 0;
     private static final int IS_DONE_INDEX = 1;
@@ -30,7 +33,7 @@ public abstract class StorageTaskParser {
     }
 
     public static StorageTaskParser processBaseTask(String storageCommand) {
-        String[] tokens = storageCommand.split(Storage.LINE_SEP);
+        String[] tokens = storageCommand.split(StorageTaskParser.INLINE_SEP);
         String taskType = tokens[StorageTaskParser.TASK_TYPE_INDEX];
         boolean isDone = tokens[StorageTaskParser.IS_DONE_INDEX].equals(StorageTaskParser.IS_DONE_STR);
         String taskLabel = tokens[StorageTaskParser.TASK_LABEL_INDEX];
