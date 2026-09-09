@@ -9,6 +9,7 @@ import java.util.Map;
  */
 public class Parser {
     private final TaskList taskList;
+    private static final String EXIT_WORD = "bye";
 
     private final Map<
             String,
@@ -19,10 +20,7 @@ public class Parser {
             "todo", this::handleAddTodoCommand,
             "deadline", this::handleAddDeadlineCommand,
             "event", this::handleAddEventCommand,
-            "delete", this::handleDeleteTaskCommand,
-            "T", this::handleStorageAddTodo,
-            "D", this::handleStorageAddDeadline,
-            "E", this::handleStorageAddEvent
+            "delete", this::handleDeleteTaskCommand
     );
 
     /**
@@ -32,6 +30,14 @@ public class Parser {
      */
     public Parser(TaskList taskList) {
         this.taskList = taskList;
+    }
+
+    public static String formatString(String currLine) {
+        return currLine.trim();
+    }
+
+    public static boolean isExitCommand(String currLine) {
+        return currLine.equals(Parser.EXIT_WORD);
     }
 
     /**
@@ -44,8 +50,6 @@ public class Parser {
     public TaskList.CommandResult processCommand(String currLine) throws JanetException {
         String command = currLine.split("\\s+")[0].trim();
         String argsLine = currLine.substring(command.length()).trim(); // remaining string
-
-        System.out.printf("Command: %s, arg: %s\n", command, argsLine);
 
         if (!this.commandMap.containsKey(command)) {
             throw new JanetException("Unrecognised command!");
@@ -128,31 +132,5 @@ public class Parser {
         } catch (NumberFormatException e) {
             throw new JanetException("Mark should contain integer!");
         }
-    }
-
-    // TODO this is stupid but fix later
-    public TaskList.CommandResult processStorageCommand(String storageCommand) throws JanetException {
-        String[] argsArr = storageCommand.split(Storage.LINE_SEP);
-        String taskType = argsArr[0];
-        return this.commandMap.get(taskType).handle(storageCommand);
-
-    }
-
-    private TaskList.CommandResult handleStorageAddTodo(String storageCommand) throws JanetException {
-        String[] argsArr = storageCommand.split(Storage.LINE_SEP);
-        return this.taskList.addTask(new Todo(argsArr[1].equals("1"), argsArr[2]));
-    }
-
-    private TaskList.CommandResult handleStorageAddDeadline(String storageCommand) throws JanetException {
-        String[] argsArr = storageCommand.split(Storage.LINE_SEP);
-        LocalDate deadlineDate = LocalDate.parse(argsArr[3]);
-        return this.taskList.addTask(new Deadline(argsArr[1].equals("1"), argsArr[2], deadlineDate));
-    }
-
-    private TaskList.CommandResult handleStorageAddEvent(String storageCommand) throws JanetException {
-        String[] argsArr = storageCommand.split(Storage.LINE_SEP);
-        LocalDate fromDate = LocalDate.parse(argsArr[3]);
-        LocalDate toDate = LocalDate.parse(argsArr[4]);
-        return this.taskList.addTask(new Event(argsArr[1].equals("1"), argsArr[2], fromDate, toDate));
     }
 }

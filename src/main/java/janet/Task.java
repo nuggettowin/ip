@@ -16,7 +16,7 @@ public abstract class Task {
      */
     public Task(boolean isDone, String taskType, String taskLabel) throws JanetException {
         if (taskLabel.isEmpty()) {
-            throw new JanetException("No task description provided!");
+            throw new JanetException("No task label provided!");
         }
         this.isDone = isDone;
         this.taskType = taskType;
@@ -28,6 +28,7 @@ public abstract class Task {
      * @throws JanetException If the new task could not be instantiated.
      */
     public abstract Task markDone() throws JanetException;
+    // TODO throw if already marked
 
     /**
      * Returns a string representation of the <code>Task</code> that is suitable for saving to a file.

@@ -1,7 +1,7 @@
 package janet;
 
 /**
- * Handles displaying messages and other user interface output for Janer.
+ * Handles displaying messages and other user interface output for Janet.
  */
 public class Ui {
     private static final String MESSAGE_GREETING = """
