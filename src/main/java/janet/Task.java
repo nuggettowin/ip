@@ -30,6 +30,10 @@ public abstract class Task {
     public abstract Task markDone() throws JanetException;
     // TODO throw if already marked
 
+    public int compareTaskLabel(Task task) {
+        return this.taskLabel.compareTo(task.taskLabel);
+    }
+
     /**
      * Returns a string representation of the <code>Task</code> that is suitable for saving to a file.
      */

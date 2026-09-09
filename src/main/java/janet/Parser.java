@@ -20,7 +20,8 @@ public class Parser {
             "todo", this::handleAddTodoCommand,
             "deadline", this::handleAddDeadlineCommand,
             "event", this::handleAddEventCommand,
-            "delete", this::handleDeleteTaskCommand
+            "delete", this::handleDeleteTaskCommand,
+            "sort", this::handleSetTaskListComparatorCommand
     );
 
     /**
@@ -135,5 +136,9 @@ public class Parser {
         } catch (NumberFormatException e) {
             throw new JanetException("Mark should contain integer!");
         }
+    }
+
+    private TaskList.CommandResult handleSetTaskListComparatorCommand(String argsLine) throws JanetException {
+        return this.taskList.setTaskListComparator(argsLine);
     }
 }

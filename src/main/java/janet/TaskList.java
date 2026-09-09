@@ -1,6 +1,8 @@
 package janet;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Stream;
 import java.util.stream.IntStream;
@@ -12,10 +14,18 @@ import java.util.stream.IntStream;
 public class TaskList {
 
     private final List<Task> tasks;
+    private static final int DEFAULT_ORDER = 0;
+    private static final String DEFAULT_COMPARATOR_KEY = "default";
+    private final Map<String, Comparator<Task>> listComparators = Map.of(
+            "default", (a, b) -> TaskList.DEFAULT_ORDER,
+            "label", (a, b) -> a.compareTaskLabel(b)
+    );
+    private final Comparator<Task> currComparator;
 
     /**
      * Represents the return value of all <code>TaskList</code> operations.
      * A <code>CommandResult</code> corresponds to the new TaskList (if any) and a string representation of the operation.
+     *
      * @param updatedTaskList
      * @param message
      */
@@ -27,17 +37,20 @@ public class TaskList {
      */
     public TaskList() {
         this.tasks = List.of();
+        this.currComparator = listComparators.get(DEFAULT_COMPARATOR_KEY);
     }
 
     /**
      * Creates an TaskList using the provided <code>List</code> of tasks.
      */
-    public TaskList(List<Task> tasks) {
+    public TaskList(List<Task> tasks, Comparator<Task> comparator) {
         this.tasks = tasks;
+        this.currComparator = comparator;
     }
 
     /**
      * Returns a new <code>CommandResult</code> with the <code>Task</code> appended to the previous <code>TaskList</code>.
+     *
      * @param task <code>Task</code> to be appended.
      * @return A <code>CommandResult</code> containing an updated <code>TaskList</code> and operation message.
      */
@@ -48,7 +61,7 @@ public class TaskList {
                 )
                 .toList();
         return new CommandResult(
-                Optional.of(new TaskList(updatedTaskList)), String.format("%s added!\n", task)
+                Optional.of(new TaskList(updatedTaskList, this.currComparator)), String.format("%s added!\n", task)
         );
     }
 
@@ -70,7 +83,8 @@ public class TaskList {
                 IntStream.range(0, this.tasks.size())
                         .filter(i -> i != pos - 1)
                         .mapToObj(i -> this.tasks.get(i))
-                        .toList()
+                        .toList(),
+                this.currComparator
         );
 
         return new CommandResult(Optional.of(retTaskList), String.format("%d deleted!", pos));
@@ -82,8 +96,9 @@ public class TaskList {
      * @return A <code>CommandResult</code> containing the current <code>TaskList</code> and formatted list.
      */
     public CommandResult listTasks() {
-        Optional<String> retString = IntStream.range(1, this.tasks.size() + 1)
-                .mapToObj(i -> Integer.toString(i) + ". " + this.tasks.get(i - 1))
+        List<Task> sortedTasks = this.tasks.stream().sorted(this.currComparator).toList();
+        Optional<String> retString = IntStream.range(1, sortedTasks.size() + 1)
+                .mapToObj(i -> Integer.toString(i) + ". " + sortedTasks.get(i - 1))
                 .reduce((a, b) -> a + "\n" + b);
 
         return new CommandResult(
@@ -133,10 +148,20 @@ public class TaskList {
 
         TaskList retTaskList = new TaskList(Stream.of(front, markedTask, back)
                 .flatMap(x -> x.stream())
-                .toList()
+                .toList(),
+                this.currComparator
         );
 
         return new CommandResult(Optional.of(retTaskList), String.format("%d marked!\n", pos));
+    }
+
+    public CommandResult setTaskListComparator(String command) throws JanetException {
+        if (!this.listComparators.containsKey(command)) {
+            throw new JanetException(String.format("Unknown sort command: %s", command));
+        }
+        Comparator<Task> comparator = this.listComparators.get(command);
+        TaskList tasklist = new TaskList(this.tasks, comparator);
+        return new CommandResult(Optional.of(tasklist), String.format("Set sort to [%s]!", command));
     }
 
     private boolean isOutOfIndex(int pos) {
