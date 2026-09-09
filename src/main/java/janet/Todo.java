@@ -9,6 +9,7 @@ public class Todo extends Task {
 
     /**
      * Creates a <code>Todo</code> task type with the specified completion status, type, and label.
+     *
      * @throws JanetException If the task label is empty.
      */
     public Todo(boolean isDone, String taskLabel) throws JanetException {

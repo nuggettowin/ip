@@ -1,7 +1,7 @@
 package janet;
 
-import java.time.format.DateTimeFormatter;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 /**
  * Represents a task that takes place over a specified period.
@@ -18,8 +18,9 @@ public class Event extends Task {
 
     // TODO: handle case where start > end
     /**
-     * Creates a <code>Todo</code> task type
+     * Creates a <code>Event</code> task type
      * with the specified completion status, type, label, starting date, and end date.
+     *
      * @throws JanetException If the task label is empty.
      */
     public Event(boolean isDone, String taskLabel, LocalDate from, LocalDate to) throws JanetException {

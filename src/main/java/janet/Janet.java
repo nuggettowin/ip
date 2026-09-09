@@ -13,10 +13,6 @@ public class Janet {
     private TaskList tasks;
     private final Ui ui;
 
-    // TODO: move logic to parser
-    protected static final String EXIT_WORD = "bye";
-    private static final String FILE_PATH = "data/tasks.txt";
-
     /**
      * Creates a new Janet application and initializes its storage, task list,
      * and user interface.
@@ -24,7 +20,7 @@ public class Janet {
      * @throws IOException If the task storage cannot be initialized.
      */
     public Janet() throws IOException, JanetException {
-        this.storage = new Storage(Janet.FILE_PATH);
+        this.storage = new Storage();
         this.ui = new Ui();
         this.tasks = this.storage.readFromFile();
     }
@@ -34,6 +30,7 @@ public class Janet {
      *
      * @param args Command-line arguments.
      * @throws IOException If the task storage cannot be initialized.
+     * @throws JanetException If the storage is poorly formatted; user rectification preferred
      */
     public static void main(String[] args) throws IOException, JanetException {
         new Janet().run();
@@ -49,13 +46,13 @@ public class Janet {
         }
 
         while (true) {
-            String currLine = sc.nextLine().trim();
+            String formattedLine = Parser.formatString(sc.nextLine());
 
-            if (currLine.equals(EXIT_WORD)) {
+            if (Parser.isExitCommand(formattedLine)) {
                 break;
             }
             try {
-                TaskList.CommandResult res = Janet.getResponse(this, currLine);
+                TaskList.CommandResult res = Janet.getResponse(this, formattedLine);
                 Janet.processCommandResult(this, res);
             } catch (IOException e) {
                 this.ui.showError(String.format("IO Failure: %s\n", e.toString()));
