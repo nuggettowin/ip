@@ -47,6 +47,7 @@ public class Janet {
         } catch (JanetException e) {
             this.ui.showError(String.format("Failure: %s\n", e.toString()));
         }
+        assert this.tasks != null : "Janet must have a task list before accepting commands";
 
         while (true) {
             String currLine = sc.nextLine().trim();

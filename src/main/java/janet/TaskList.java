@@ -65,6 +65,7 @@ public class TaskList {
                     String.format("Deletion out of index!")
             );
         }
+        assert pos >= 1 && pos <= this.tasks.size() : "Validated position must be safe to convert to an index";
         TaskList retTaskList = new TaskList(
                 IntStream.range(0, this.tasks.size())
                         .filter(i -> i != pos - 1)
@@ -121,6 +122,7 @@ public class TaskList {
                     String.format("No mark index ")
             );
         }
+        assert pos >= 1 && pos <= this.tasks.size() : "Validated position must be safe to convert to an index";
         List<Task> front = this.tasks.subList(0, pos - 1);
         List<Task> back = this.tasks.subList(pos, this.tasks.size());
         List<Task> markedTask = List.of(

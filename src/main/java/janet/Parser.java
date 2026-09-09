@@ -50,7 +50,9 @@ public class Parser {
         if (!this.commandMap.containsKey(command)) {
             throw new JanetException("Unrecognised command!");
         } else {
-            return this.commandMap.get(command).handle(argsLine);
+            CommandHandler handler = this.commandMap.get(command);
+            assert handler != null : "Every registered command must have a handler";
+            return handler.handle(argsLine);
         }
     }
 
@@ -119,6 +121,7 @@ public class Parser {
     }
 
     private TaskList.CommandResult handleAddTaskCommand(Task task) {
+        assert task != null : "Private parser helpers only receive constructed tasks";
         return this.taskList.addTask(task);
     }
 
