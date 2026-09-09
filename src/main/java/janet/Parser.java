@@ -51,8 +51,6 @@ public class Parser {
         String command = currLine.split("\\s+")[0].trim();
         String argsLine = currLine.substring(command.length()).trim(); // remaining string
 
-        System.out.printf("Command: %s, arg: %s\n", command, argsLine);
-
         if (!this.commandMap.containsKey(command)) {
             throw new JanetException("Unrecognised command!");
         } else {

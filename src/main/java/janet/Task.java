@@ -28,6 +28,7 @@ public abstract class Task {
      * @throws JanetException If the new task could not be instantiated.
      */
     public abstract Task markDone() throws JanetException;
+    // TODO throw if already marked
 
     /**
      * Returns a string representation of the <code>Task</code> that is suitable for saving to a file.

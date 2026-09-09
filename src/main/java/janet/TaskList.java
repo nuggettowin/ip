@@ -42,13 +42,13 @@ public class TaskList {
      * @return A <code>CommandResult</code> containing an updated <code>TaskList</code> and operation message.
      */
     public CommandResult addTask(Task task) {
-        List<Task> updatedTask = Stream.concat(
+        List<Task> updatedTaskList = Stream.concat(
                         this.tasks.stream(),
                         Stream.of(task)
                 )
                 .toList();
         return new CommandResult(
-                Optional.of(new TaskList(updatedTask)), String.format("%s added!\n", task)
+                Optional.of(new TaskList(updatedTaskList)), String.format("%s added!\n", task)
         );
     }
 
@@ -60,7 +60,7 @@ public class TaskList {
      * @throws <code>JanetException</code> If the specified position is outside the TaskList.
      */
     public CommandResult deleteTask(int pos) throws JanetException {
-        if (pos < 1 || pos > this.tasks.size()) {
+        if (this.isOutOfIndex(pos)) {
             throw new JanetException(
                     String.format("Deletion out of index!")
             );
@@ -116,7 +116,7 @@ public class TaskList {
      * @throws JanetException If the specified position is outside the <code>TaskList</code>.
      */
     public CommandResult markTask(int pos) throws JanetException {
-        if (pos < 1 || pos > this.tasks.size()) {
+        if (this.isOutOfIndex(pos)) {
             throw new JanetException(
                     String.format("No mark index ")
             );
@@ -135,6 +135,10 @@ public class TaskList {
         );
 
         return new CommandResult(Optional.of(retTaskList), String.format("%d marked!\n", pos));
+    }
+
+    private boolean isOutOfIndex(int pos) {
+        return (pos < 1) || (pos > this.tasks.size());
     }
 
     // also used as file format
