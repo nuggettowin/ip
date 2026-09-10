@@ -5,10 +5,10 @@ package janet;
  */
 public abstract class Task {
 
-    private final boolean isDone;
+    protected static final String FILE_DELIMITER = "|";
     protected final String taskType;
     protected final String taskLabel;
-    protected static final String FILE_DELIMITER = "|";
+    private final boolean isDone;
 
     /**
      * Creates a task with the specified completion status, type, and label.

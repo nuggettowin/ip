@@ -2,18 +2,17 @@ package janet;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 
 /**
  * Represents a <code>Task</code> that must be completed by a specified deadline.
  */
 public class Deadline extends Task {
 
-    private final LocalDate deadline;
-    private static final String TASK_TYPE = "D";
     protected static final String DEADLINE_SEP = "/by";
+    private static final String TASK_TYPE = "D";
     private static final DateTimeFormatter DATE_TIME_FORMAT =
             DateTimeFormatter.ofPattern("MMM d yyyy");
+    private final LocalDate deadline;
 
     /**
      * Creates a <code>Deadline</code> task type with the specified completion status, type, label, and deadline.

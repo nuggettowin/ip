@@ -8,13 +8,13 @@ import java.time.format.DateTimeFormatter;
  */
 public class Event extends Task {
 
-    private final LocalDate from;
-    private final LocalDate to;
-    private static final String TASK_TYPE = "E";
     protected static final String EVENT_FROM_SEP = "/from";
     protected static final String EVENT_TO_SEP = "/to";
+    private static final String TASK_TYPE = "E";
     private static final DateTimeFormatter DATE_TIME_FORMAT =
             DateTimeFormatter.ofPattern("MMM d yyyy");
+    private final LocalDate from;
+    private final LocalDate to;
 
     // TODO: handle case where start > end
     /**

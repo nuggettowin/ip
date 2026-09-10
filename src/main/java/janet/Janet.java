@@ -30,11 +30,7 @@ public class Janet {
      *
      * @param args Command-line arguments.
      * @throws IOException If the task storage cannot be initialized.
-<<<<<<< HEAD
-     * @throws JanetException If the task storage is improperly formatted.
-=======
-     * @throws JanetException If the storage is poorly formatted; user rectification preferred
->>>>>>> 80578b6c6c9e50ec6626915a5889bf258d5d0c96
+     * @throws JanetException If the storage is poorly formatted; user rectification preferred.
      */
     public static void main(String[] args) throws IOException, JanetException {
         new Janet().run();
@@ -73,6 +69,11 @@ public class Janet {
         return new Parser(janet.tasks).processCommand(input);
     }
 
+    /**
+     * Handles storage write, UI display, and tasklist update based on <code>CommandResult</code>.
+     *
+     * @throws IOException If the file cannot be written to.
+     */
     public static void processCommandResult(Janet janet, TaskList.CommandResult commandResult) throws IOException {
         janet.storage.writeToFile(
                 commandResult.updatedTaskList()

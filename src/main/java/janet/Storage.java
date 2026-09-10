@@ -5,15 +5,14 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
-import java.util.regex.Pattern;
 
 /**
  * Handles Reading and writing tasks to file
  */
 public class Storage {
 
-    private final File file;
     private static final String FILE_PATH = "data/tasks.txt";
+    private final File file;
 
     /**
      * Creates a storage file at the specified path, creating any missing parent

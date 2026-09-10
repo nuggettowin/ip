@@ -27,7 +27,7 @@ public class Main extends Application {
             stage.setScene(scene);
             stage.setMinHeight(220);
             stage.setMinWidth(417);
-            fxmlLoader.<MainWindow>getController().setJanet(janet);  // inject the Janet instance
+            fxmlLoader.<MainWindow>getController().setJanet(janet); // inject the Janet instance
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();

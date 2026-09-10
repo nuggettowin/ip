@@ -4,8 +4,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Stream;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 /**
  * An ordered unmodifiable collection of <code>Task</code> elements.
@@ -13,9 +13,9 @@ import java.util.stream.IntStream;
  */
 public class TaskList {
 
-    private final List<Task> tasks;
     private static final int DEFAULT_ORDER = 0;
     private static final String DEFAULT_COMPARATOR_KEY = "default";
+    private final List<Task> tasks;
     private final Map<String, Comparator<Task>> listComparators = Map.of(
             "default", (a, b) -> TaskList.DEFAULT_ORDER,
             "label", (a, b) -> a.compareTaskLabel(b)
@@ -24,7 +24,7 @@ public class TaskList {
 
     /**
      * Represents the return value of all <code>TaskList</code> operations.
-     * A <code>CommandResult</code> corresponds to the new TaskList (if any) and a string representation of the operation.
+     * A <code>CommandResult</code> corresponds to the new TaskList (if any) and string representation of the operation.
      *
      * @param updatedTaskList
      * @param message
@@ -49,7 +49,8 @@ public class TaskList {
     }
 
     /**
-     * Returns a new <code>CommandResult</code> with the <code>Task</code> appended to the previous <code>TaskList</code>.
+     * Returns a new <code>CommandResult</code>.
+     * The <code>Task</code> is appended to the previous <code>TaskList</code>.
      *
      * @param task <code>Task</code> to be appended.
      * @return A <code>CommandResult</code> containing an updated <code>TaskList</code> and operation message.
@@ -70,7 +71,7 @@ public class TaskList {
      *
      * @param pos The one-based position of the task to delete.
      * @return A <code>CommandResult</code> containing the updated <code>TaskList</code> and operation message.
-     * @throws <code>JanetException</code> If the specified position is outside the TaskList.
+     * @throws JanetException if the specified position is outside the {@code TaskList}.
      */
     public CommandResult deleteTask(int pos) throws JanetException {
         if (this.isOutOfIndex(pos)) {

@@ -8,8 +8,9 @@ import java.util.Map;
  * Parses user commands and maps them to their corresponding task operations.
  */
 public class Parser {
-    private final TaskList taskList;
+
     private static final String EXIT_WORD = "bye";
+    private final TaskList taskList;
 
     private final Map<
             String,

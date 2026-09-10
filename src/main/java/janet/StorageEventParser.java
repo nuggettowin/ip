@@ -2,6 +2,9 @@ package janet;
 
 import java.time.LocalDate;
 
+/**
+ * Parses storage lines representing <code>Event</code> task type.
+ */
 public class StorageEventParser extends StorageTaskParser {
     private static final int FROM_INDEX = 0;
     private static final int TO_INDEX = 1;
@@ -9,6 +12,9 @@ public class StorageEventParser extends StorageTaskParser {
     private final LocalDate from;
     private final LocalDate to;
 
+    /**
+     * Parses <code>Event</code> specific String values.
+     */
     public StorageEventParser(TaskField taskField) {
         super(taskField.isDone(), taskField.taskLabel());
         String fromStr = taskField.args()[StorageEventParser.FROM_INDEX];
