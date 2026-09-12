@@ -90,6 +90,12 @@ public class Janet {
         return Parser.isResetCommand(Parser.formatString(input));
     }
 
+    /**
+     * Clears malformed saved tasks and creates a fresh Janet instance.
+     *
+     * @return A Janet instance with an empty task list and no pending storage recovery.
+     * @throws IOException If the storage file cannot be cleared.
+     */
     public Janet resolveStorageRecovery() throws IOException {
         this.storage.resetStorage();
         return new Janet(this.storage, this.ui, new TaskList(), null);

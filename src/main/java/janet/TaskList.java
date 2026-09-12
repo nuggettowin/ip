@@ -66,7 +66,7 @@ public class TaskList {
             throw new JanetException(
                     String.format(
                             "Duplicate tasks detected! Match(es): %s",
-                    matchingTasks.toString()
+                            matchingTasks.toString()
                     )
             );
         }

@@ -52,8 +52,8 @@ public abstract class Task {
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof Task t) {
-            return this.taskType.equals(t.taskType) &&
-                    this.taskLabel.equals(t.taskLabel);
+            return this.taskType.equals(t.taskType)
+                    && this.taskLabel.equals(t.taskLabel);
         }
 
         return false;
