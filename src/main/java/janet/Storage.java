@@ -46,16 +46,22 @@ public class Storage {
      * @throws FileNotFoundException If the storage file cannot be found.
      * @throws JanetException If a stored task cannot be parsed.
      */
-    public TaskList readFromFile() throws FileNotFoundException, JanetException {
-        Scanner sc = new Scanner(this.file);
-        TaskList taskList = new TaskList();
-        while (sc.hasNextLine()) {
-            String currLine = sc.nextLine();
-            taskList = StorageTaskParser.processBaseTask(currLine)
-                    .processStorageCommand(taskList)
-                    .updatedTaskList()
-                    .orElse(taskList);
+    public TaskList readFromFile() throws FileNotFoundException, JanetFileException {
+        try {
+            Scanner sc = new Scanner(this.file);
+            TaskList taskList = new TaskList();
+            while (sc.hasNextLine()) {
+                String currLine = sc.nextLine();
+                taskList = StorageTaskParser.processBaseTask(currLine)
+                        .processStorageCommand(taskList)
+                        .updatedTaskList()
+                        .orElse(taskList);
+            }
+            return taskList;
+        } catch (JanetException e) {
+            throw new JanetFileException(String.format(
+                    "I have stopped this process as your file is malformed: %s.", e.toString())
+            );
         }
-        return taskList;
     }
 }

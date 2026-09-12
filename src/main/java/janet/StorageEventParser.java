@@ -6,6 +6,9 @@ import java.time.LocalDate;
  * Parses storage lines representing <code>Event</code> task type.
  */
 public class StorageEventParser extends StorageTaskParser {
+
+    private static final String TASK_NAME = "Event";
+    private static final int POSITIONAL_ARG_COUNT = 2;
     private static final int FROM_INDEX = 0;
     private static final int TO_INDEX = 1;
 
@@ -15,8 +18,16 @@ public class StorageEventParser extends StorageTaskParser {
     /**
      * Parses <code>Event</code> specific String values.
      */
-    public StorageEventParser(TaskField taskField) {
+    public StorageEventParser(TaskField taskField) throws JanetFileException {
         super(taskField.isDone(), taskField.taskLabel());
+
+        if (taskField.args().length > StorageEventParser.POSITIONAL_ARG_COUNT) {
+            throw new JanetFileException(
+                    super.generateArgLengthExceptionMessage(
+                            StorageEventParser.TASK_NAME, StorageEventParser.POSITIONAL_ARG_COUNT
+                    )
+            );
+        }
         String fromStr = taskField.args()[StorageEventParser.FROM_INDEX];
         String toStr = taskField.args()[StorageEventParser.TO_INDEX];
         this.from = LocalDate.parse(fromStr);

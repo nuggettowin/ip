@@ -19,7 +19,7 @@ public class Janet {
      *
      * @throws IOException If the task storage cannot be initialized.
      */
-    public Janet() throws IOException, JanetException {
+    public Janet() throws IOException, JanetFileException {
         this.storage = new Storage();
         this.ui = new Ui();
         this.tasks = this.storage.readFromFile();
@@ -32,7 +32,7 @@ public class Janet {
      * @throws IOException If the task storage cannot be initialized.
      * @throws JanetException If the storage is poorly formatted; user rectification preferred.
      */
-    public static void main(String[] args) throws IOException, JanetException {
+    public static void main(String[] args) throws IOException, JanetFileException {
         new Janet().run();
     }
 
@@ -41,7 +41,7 @@ public class Janet {
         Scanner sc = new Scanner(System.in);
         try {
             this.tasks = this.storage.readFromFile();
-        } catch (JanetException e) {
+        } catch (JanetFileException e) {
             this.ui.showError(String.format("Failure: %s\n", e.toString()));
         }
         assert this.tasks != null : "Janet must have a task list before accepting commands";

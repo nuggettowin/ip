@@ -2,7 +2,6 @@ package janet;
 
 import java.util.Arrays;
 import java.util.Map;
-import java.util.function.Function;
 import java.util.regex.Pattern;
 
 /**
@@ -20,7 +19,7 @@ public abstract class StorageTaskParser {
 
     protected static final String INLINE_SEP = Pattern.quote("|");
 
-    private static final Map<String, Function<TaskField, StorageTaskParser>> taskMap = Map.of(
+    private static final Map<String, StorageCommandHandler> taskMap = Map.of(
             "T", (x) -> new StorageTodoParser(x),
             "D", (x) -> new StorageDeadlineParser(x),
             "E", (x) -> new StorageEventParser(x)
@@ -51,7 +50,7 @@ public abstract class StorageTaskParser {
      * @param storageCommand The serialized task command read from storage
      * @return The parser corresponding to the command's task type
      */
-    public static StorageTaskParser processBaseTask(String storageCommand) {
+    public static StorageTaskParser processBaseTask(String storageCommand) throws JanetFileException {
         String[] tokens = storageCommand.split(StorageTaskParser.INLINE_SEP);
         String taskType = tokens[StorageTaskParser.TASK_TYPE_INDEX];
         boolean isDone = tokens[StorageTaskParser.IS_DONE_INDEX].equals(StorageTaskParser.IS_DONE_STR);
@@ -67,8 +66,17 @@ public abstract class StorageTaskParser {
 
         return StorageTaskParser.taskMap
                 .get(taskType)
-                .apply(taskFields);
+                .handle(taskFields);
     }
 
     public abstract TaskList.CommandResult processStorageCommand(TaskList taskList) throws JanetException;
+
+    public String generateArgLengthExceptionMessage(String taskName, int positionalArgCount) {
+        return String.format(
+                "%s takes %d positional arguments but %d was given",
+                taskName,
+                positionalArgCount,
+                positionalArgCount
+        );
+    }
 }

@@ -15,7 +15,7 @@ public class Main extends Application {
 
     private Janet janet = new Janet();
 
-    public Main() throws IOException, JanetException {
+    public Main() throws IOException, JanetFileException {
     }
 
     @Override

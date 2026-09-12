@@ -5,11 +5,20 @@ package janet;
  */
 public class StorageTodoParser extends StorageTaskParser {
 
+    private static final String TASK_NAME = "Todo";
+    private static final int POSITIONAL_ARG_COUNT = 0;
     /**
      * Parses <code>Todo</code> specific String values.
      */
-    public StorageTodoParser(TaskField taskField) {
+    public StorageTodoParser(TaskField taskField) throws JanetFileException {
         super(taskField.isDone(), taskField.taskLabel());
+        if (taskField.args().length > StorageTodoParser.POSITIONAL_ARG_COUNT) {
+            throw new JanetFileException(
+                    super.generateArgLengthExceptionMessage(
+                            StorageTodoParser.TASK_NAME, StorageTodoParser.POSITIONAL_ARG_COUNT
+                    )
+            );
+        }
     }
 
     @Override
