@@ -54,6 +54,7 @@ public class TaskList {
      *
      * @param task <code>Task</code> to be appended.
      * @return A <code>CommandResult</code> containing an updated <code>TaskList</code> and operation message.
+     * @throws JanetException If task already exists.
      */
     public CommandResult addTask(Task task) throws JanetException {
         List<Task> matchingTasks = this.tasks
