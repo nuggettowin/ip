@@ -131,7 +131,7 @@ public class Parser {
         }
     }
 
-    private TaskList.CommandResult handleAddTaskCommand(Task task) {
+    private TaskList.CommandResult handleAddTaskCommand(Task task) throws JanetException {
         assert task != null : "Private parser helpers only receive constructed tasks";
         return this.taskList.addTask(task);
     }

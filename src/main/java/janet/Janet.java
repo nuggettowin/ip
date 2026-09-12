@@ -47,6 +47,13 @@ public class Janet {
         }
     }
 
+    Janet(Storage storage, Ui ui, TaskList tasks, JanetFileException storageFileException) {
+        this.storage = storage;
+        this.ui = ui;
+        this.tasks = tasks;
+        this.storageFileException = storageFileException;
+    }
+
     /**
      * Returns whether the application is waiting for the user to resolve malformed saved data.
      *
@@ -78,21 +85,14 @@ public class Janet {
      *
      * @param input The user's response from either the text UI or the GUI chat field.
      * @return {@code true} if storage was reset and Janet can accept commands; {@code false} if the user declined.
-     * @throws IOException If the malformed storage file cannot be cleared.
-     * @throws IllegalStateException If no storage recovery is currently required.
      */
-    public boolean resolveStorageRecovery(String input) throws IOException {
-        if (!this.isStorageRecoveryRequired()) {
-            throw new IllegalStateException("Storage recovery is not required.");
-        }
-        if (!Parser.isResetCommand(Parser.formatString(input))) {
-            return false;
-        }
+    public boolean isResolveStorageRecoveryRequest(String input) {
+        return Parser.isResetCommand(Parser.formatString(input));
+    }
 
+    public Janet resolveStorageRecovery() throws IOException {
         this.storage.resetStorage();
-        this.tasks = new TaskList();
-        this.storageFileException = null;
-        return true;
+        return new Janet(this.storage, this.ui, new TaskList(), null);
     }
 
     /**
@@ -135,22 +135,6 @@ public class Janet {
         this.ui.showGoodbye();
     }
 
-    /**
-     * Displays and resolves a pending storage-recovery prompt through the console.
-     *
-     * @param sc Scanner that reads answers from the text UI.
-     * @return {@code true} when Janet is ready to accept commands; {@code false} when the user chose to exit.
-     * @throws IOException If the malformed storage file cannot be cleared.
-     */
-    private boolean resolveStorageRecoveryFromTextUi(Scanner sc) throws IOException {
-        if (!this.isStorageRecoveryRequired()) {
-            return true;
-        }
-
-        this.ui.showError(this.getStorageRecoveryPrompt());
-        return this.resolveStorageRecovery(sc.nextLine());
-    }
-
     public static TaskList.CommandResult getResponse(Janet janet, String input) throws JanetException {
         if (janet.isStorageRecoveryRequired()) {
             throw new JanetException("Storage recovery is required before commands can be processed.");
@@ -170,5 +154,26 @@ public class Janet {
                         .orElse(new TaskList().toString())
         );
         janet.tasks = commandResult.updatedTaskList().orElse(janet.tasks);
+    }
+
+    /**
+     * Displays and resolves a pending storage-recovery prompt through the console.
+     *
+     * @param sc Scanner that reads answers from the text UI.
+     * @return {@code true} when Janet is ready to accept commands; {@code false} when the user chose to exit.
+     * @throws IOException If the malformed storage file cannot be cleared.
+     */
+    private boolean resolveStorageRecoveryFromTextUi(Scanner sc) throws IOException {
+        if (!this.isStorageRecoveryRequired()) {
+            return true;
+        }
+
+        this.ui.showError(this.getStorageRecoveryPrompt());
+        String input = sc.nextLine();
+        if (!this.isResolveStorageRecoveryRequest(input)) {
+            return false;
+        }
+        this.resolveStorageRecovery();
+        return true;
     }
 }

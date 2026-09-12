@@ -10,6 +10,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+
 /**
  * Controller for the main GUI.
  */
@@ -58,56 +59,52 @@ public class MainWindow extends AnchorPane {
 
     /**
      * Creates a new dialog box in response to user input and appends it to the dialog container.
-     * Clears the user input after processing.
      */
     @FXML
-    private void handleUserInput() {
+    private void handleUserInput() throws IOException {
+        assert this.janet != null : "Janet should not be null when handling input";
+
         String input = userInput.getText();
-        if (this.janet == null) {
-            return;
-        }
+        userInput.clear();
+
         if (this.janet.isStorageRecoveryRequired()) {
-            this.handleStorageRecovery(input);
+            this.handleStorageRecoveryInput(input);
+            return;
         } else if (Parser.isExitCommand(Parser.formatString(input))) {
             Platform.exit();
             return;
-        } else {
-            try {
-                TaskList.CommandResult response = Janet.getResponse(this.janet, input);
-                Janet.processCommandResult(this.janet, response);
-                this.addToDialogContainer(input, response.message());
-            } catch (IOException e) {
-                this.addToDialogContainer(input, String.format("IO failure: %s", e.toString()));
-            } catch (JanetException e) {
-                this.addToDialogContainer(input, e.toString());
-            }
         }
-        userInput.clear();
+
+        this.handleNormalInput(input);
     }
 
-    /**
-     * Handles a chat response to the malformed-storage recovery prompt.
-     *
-     * @param input User response entered in the chat field.
-     */
-    private void handleStorageRecovery(String input) {
+    private void addResponseToDialogContainer(String input, String message) {
+        this.addUserMessage(input);
+        this.addJanetMessage(message);
+    }
+
+    private void handleNormalInput(String input) {
         try {
-            if (this.janet.resolveStorageRecovery(input)) {
-                this.addToDialogContainer(input, "Saved tasks were cleared. Janet is ready for a fresh start.");
-            } else {
-                this.addToDialogContainer(input, "Janet will now close.");
-                Platform.exit();
-            }
+            TaskList.CommandResult response = Janet.getResponse(this.janet, input);
+            Janet.processCommandResult(this.janet, response);
+            this.addResponseToDialogContainer(input, response.message());
         } catch (IOException e) {
-            this.addToDialogContainer(input, String.format("IO failure: %s", e.toString()));
+            this.addResponseToDialogContainer(input, String.format("IO failure: %s", e.getMessage()));
+        } catch (JanetException e) {
+            this.addResponseToDialogContainer(input, e.getMessage());
         }
     }
 
-    private void addToDialogContainer(String input, String message) {
-        dialogContainer.getChildren().addAll(
-                DialogBox.getUserDialog(input, userImage),
-                DialogBox.getJanetDialog(message, janetImage)
-        );
+    private void handleStorageRecoveryInput(String input) throws IOException {
+        if (!this.janet.isResolveStorageRecoveryRequest(input)) {
+            this.addResponseToDialogContainer(input, "Janet will now close.");
+            Platform.exit();
+            return;
+        }
+
+        this.janet = this.janet.resolveStorageRecovery();
+        this.addResponseToDialogContainer(input, "Saved tasks were cleared. Janet is ready for a fresh start.");
+        return;
     }
 
     /**
@@ -116,6 +113,19 @@ public class MainWindow extends AnchorPane {
      * @param message Message to show in Janet's chat dialog.
      */
     private void addJanetMessage(String message) {
-        dialogContainer.getChildren().add(DialogBox.getJanetDialog(message, janetImage));
+        this.addMessage(DialogBox.getJanetDialog(message, janetImage));
+    }
+
+    /**
+     * Adds a user-only dialog to the dialog container.
+     *
+     * @param message Message to show in the user's chat dialog.
+     */
+    private void addUserMessage(String message) {
+        this.addMessage(DialogBox.getUserDialog(message, userImage));
+    }
+
+    private void addMessage(DialogBox dialogBox) {
+        dialogContainer.getChildren().add(dialogBox);
     }
 }

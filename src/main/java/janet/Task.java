@@ -12,6 +12,7 @@ public abstract class Task {
 
     /**
      * Creates a task with the specified completion status, type, and label.
+     *
      * @throws JanetException If the task label is empty.
      */
     public Task(boolean isDone, String taskType, String taskLabel) throws JanetException {
@@ -25,6 +26,7 @@ public abstract class Task {
 
     /**
      * Returns a new <code>Task</code> the same as this <code>Task</code>but marked as completed.
+     *
      * @throws JanetException If the new task could not be instantiated.
      */
     public abstract Task markDone() throws JanetException;

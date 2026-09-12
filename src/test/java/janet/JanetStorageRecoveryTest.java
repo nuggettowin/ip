@@ -20,18 +20,19 @@ class JanetStorageRecoveryTest {
     void malformedStorage_requiresResetBeforeCommandsAndRecoversAfterReset() throws IOException, JanetException {
         Path storageFile = temporaryDirectory.resolve("tasks.txt");
         Files.writeString(storageFile, "not a saved task");
-        Janet janet = new Janet(new Storage(storageFile.toFile()));
+        final Janet janet = new Janet(new Storage(storageFile.toFile()));
 
         assertTrue(janet.isStorageRecoveryRequired());
         assertTrue(janet.getStorageRecoveryPrompt().contains("Tasks takes at least 3 positional arguments"));
         assertThrows(JanetException.class, () -> Janet.getResponse(janet, "list"));
 
-        assertFalse(janet.resolveStorageRecovery("keep"));
+        assertFalse(janet.isResolveStorageRecoveryRequest("keep"));
         assertTrue(janet.isStorageRecoveryRequired());
-        assertTrue(janet.resolveStorageRecovery(" reset "));
+        assertTrue(janet.isResolveStorageRecoveryRequest(" reset "));
 
-        assertFalse(janet.isStorageRecoveryRequired());
+        Janet newJanet = janet.resolveStorageRecovery();
+        assertFalse(newJanet.isStorageRecoveryRequired());
         assertEquals("", Files.readString(storageFile));
-        assertEquals("No tasks listed!", Janet.getResponse(janet, "list").message());
+        assertEquals("No tasks listed!", Janet.getResponse(newJanet, "list").message());
     }
 }
