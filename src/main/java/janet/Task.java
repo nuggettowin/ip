@@ -48,6 +48,17 @@ public abstract class Task {
         );
     }
 
+    // User not allowed to e.g. submit the same task with a different deadline. Expected to delete.
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Task t) {
+            return this.taskType.equals(t.taskType) &&
+                    this.taskLabel.equals(t.taskLabel);
+        }
+
+        return false;
+    }
+
     @Override
     public String toString() {
         return String.format("[%s][%s] %s", this.taskType, this.isDone ? "X" : " ", this.taskLabel);

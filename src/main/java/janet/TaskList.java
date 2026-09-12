@@ -55,7 +55,20 @@ public class TaskList {
      * @param task <code>Task</code> to be appended.
      * @return A <code>CommandResult</code> containing an updated <code>TaskList</code> and operation message.
      */
-    public CommandResult addTask(Task task) {
+    public CommandResult addTask(Task task) throws JanetException {
+        List<Task> matchingTasks = this.tasks
+                .stream()
+                .filter((x) -> x.equals(task))
+                .toList();
+
+        if (!matchingTasks.isEmpty()) {
+            throw new JanetException(
+                    String.format(
+                            "Duplicate tasks detected! Match(es): %s",
+                    matchingTasks.toString()
+                    )
+            );
+        }
         List<Task> updatedTaskList = Stream.concat(
                         this.tasks.stream(),
                         Stream.of(task)
