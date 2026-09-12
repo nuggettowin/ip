@@ -2,7 +2,6 @@ package janet;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -14,8 +13,9 @@ import java.util.stream.Stream;
 public class TaskList {
 
     protected static final int DEFAULT_ORDER = 0;
-    protected static final Comparator<Task> defaultComparator = (a, b) -> TaskList.DEFAULT_ORDER;
-    protected static final Comparator<Task> labelComparator = (a, b) -> a.compareTaskLabel(b);
+    // default is based on entry order
+    protected static final Comparator<Task> DEFAULT_COMPARATOR = (a, b) -> TaskList.DEFAULT_ORDER;
+    protected static final Comparator<Task> LABEL_COMPARATOR = (a, b) -> a.compareTaskLabel(b);
 
     private static final String DEFAULT_COMPARATOR_KEY = "default";
     private final List<Task> tasks;
@@ -36,7 +36,7 @@ public class TaskList {
      */
     public TaskList() {
         this.tasks = List.of();
-        this.currComparator = TaskList.defaultComparator;
+        this.currComparator = TaskList.DEFAULT_COMPARATOR;
     }
 
     /**

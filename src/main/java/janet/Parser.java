@@ -28,8 +28,8 @@ public class Parser {
     );
 
     private final Map<String, Comparator<Task>> listComparators = Map.of(
-            "default", TaskList.defaultComparator,
-            "label", TaskList.labelComparator
+            "default", TaskList.DEFAULT_COMPARATOR,
+            "label", TaskList.LABEL_COMPARATOR
     );
 
     /**
