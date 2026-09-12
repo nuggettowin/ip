@@ -126,9 +126,9 @@ public class Janet {
                 Janet.processCommandResult(this, res);
                 this.ui.showMessage(res.message());
             } catch (IOException e) {
-                this.ui.showError(String.format("IO Failure: %s\n", e.toString()));
+                this.ui.showError(String.format("IO Failure: %s\n", e.getMessage()));
             } catch (JanetException e) {
-                this.ui.showError(String.format("Failure: %s\n", e.toString()));
+                this.ui.showError(String.format("Failure: %s\n", e.getMessage()));
             }
 
         }
