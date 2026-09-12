@@ -13,21 +13,23 @@ import javafx.stage.Stage;
  */
 public class Main extends Application {
 
-    private Janet janet = new Janet();
-
-    public Main() throws IOException, JanetFileException {
-    }
-
     @Override
     public void start(Stage stage) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/view/MainWindow.fxml"));
             AnchorPane ap = fxmlLoader.load();
             Scene scene = new Scene(ap);
+            MainWindow mainWindow = fxmlLoader.getController();
+
+            try {
+                mainWindow.setJanet(new Janet());
+            } catch (IOException e) {
+                mainWindow.showStartupError(String.format("Unable to start Janet: %s", e.getMessage()));
+            }
+
             stage.setScene(scene);
             stage.setMinHeight(220);
             stage.setMinWidth(417);
-            fxmlLoader.<MainWindow>getController().setJanet(janet); // inject the Janet instance
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();

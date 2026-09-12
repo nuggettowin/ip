@@ -21,9 +21,23 @@ public class Storage {
      * @throws IOException If the directories or storage file cannot be created.
      */
     public Storage() throws IOException {
-        this.file = new File(Storage.FILE_PATH);
-        file.getParentFile().mkdirs();
-        file.createNewFile();
+        this(new File(Storage.FILE_PATH));
+    }
+
+    /**
+     * Creates storage backed by a specific file.
+     * This is package-private so application tests can use a temporary file instead of real user data.
+     *
+     * @param file File used for storage.
+     * @throws IOException If the directories or storage file cannot be created.
+     */
+    Storage(File file) throws IOException {
+        this.file = file;
+        File parentDirectory = this.file.getParentFile();
+        if (parentDirectory != null) {
+            parentDirectory.mkdirs();
+        }
+        this.file.createNewFile();
     }
 
 
@@ -44,12 +58,11 @@ public class Storage {
      *
      * @return <code>TaskList</code> containing the tasks stored in the file.
      * @throws FileNotFoundException If the storage file cannot be found.
-     * @throws JanetException If a stored task cannot be parsed.
+     * @throws JanetFileException If a stored task cannot be parsed.
      */
     public TaskList readFromFile() throws FileNotFoundException, JanetFileException {
-        try {
-            Scanner sc = new Scanner(this.file);
-            TaskList taskList = new TaskList();
+        TaskList taskList = new TaskList();
+        try (Scanner sc = new Scanner(this.file)) {
             while (sc.hasNextLine()) {
                 String currLine = sc.nextLine();
                 taskList = StorageTaskParser.processBaseTask(currLine)
@@ -57,11 +70,18 @@ public class Storage {
                         .updatedTaskList()
                         .orElse(taskList);
             }
-            return taskList;
         } catch (JanetException e) {
-            throw new JanetFileException(String.format(
-                    "I have stopped this process as your file is malformed: %s.", e.toString())
-            );
+            throw new JanetFileException(e.getMessage());
         }
+        return taskList;
+    }
+
+    /**
+     * Clears all saved tasks while keeping the storage file available for future writes.
+     *
+     * @throws IOException If the storage file cannot be cleared.
+     */
+    public void resetStorage() throws IOException {
+        this.writeToFile("");
     }
 }

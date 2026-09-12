@@ -9,6 +9,7 @@ import java.util.Map;
  */
 public class Parser {
 
+    protected static final String RESET_WORD = "reset";
     private static final String EXIT_WORD = "bye";
     private final TaskList taskList;
 
@@ -40,6 +41,10 @@ public class Parser {
 
     public static boolean isExitCommand(String currLine) {
         return currLine.equals(Parser.EXIT_WORD);
+    }
+
+    public static boolean isResetCommand(String currLine) {
+        return currLine.equals(Parser.RESET_WORD);
     }
 
     /**

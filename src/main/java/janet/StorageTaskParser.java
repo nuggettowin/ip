@@ -11,11 +11,12 @@ public abstract class StorageTaskParser {
     /**
      * Represents the fields common to all <code>Task</code> types and any remaining arguments.
      *
-     * @param isDone Whether the <code>Task</code> has been marked as 'done'.
+     * @param isDone    Whether the <code>Task</code> has been marked as 'done'.
      * @param taskLabel The description of each task.
-     * @param args Any remaining arguments for specific <code>Task</code> types, if any.
+     * @param args      Any remaining arguments for specific <code>Task</code> types, if any.
      */
-    public record TaskField(boolean isDone, String taskLabel, String[] args) {}
+    public record TaskField(boolean isDone, String taskLabel, String[] args) {
+    }
 
     protected static final String INLINE_SEP = Pattern.quote("|");
 
@@ -52,6 +53,15 @@ public abstract class StorageTaskParser {
      */
     public static StorageTaskParser processBaseTask(String storageCommand) throws JanetFileException {
         String[] tokens = storageCommand.split(StorageTaskParser.INLINE_SEP);
+        if (tokens.length < StorageTaskParser.TASK_LABEL_INDEX + 1) {
+            throw new JanetFileException(
+                    String.format("Tasks takes at least %d positional arguments but %d given.",
+                            StorageTaskParser.TASK_LABEL_INDEX + 1,
+                            tokens.length
+                    )
+            );
+        }
+
         String taskType = tokens[StorageTaskParser.TASK_TYPE_INDEX];
         boolean isDone = tokens[StorageTaskParser.IS_DONE_INDEX].equals(StorageTaskParser.IS_DONE_STR);
         String taskLabel = tokens[StorageTaskParser.TASK_LABEL_INDEX];
@@ -64,6 +74,9 @@ public abstract class StorageTaskParser {
 
         TaskField taskFields = new TaskField(isDone, taskLabel, args);
 
+        if (!StorageTaskParser.taskMap.containsKey(taskType)) {
+            throw new JanetFileException(String.format("Unrecognized task type: %s", taskType));
+        }
         return StorageTaskParser.taskMap
                 .get(taskType)
                 .handle(taskFields);
@@ -71,6 +84,13 @@ public abstract class StorageTaskParser {
 
     public abstract TaskList.CommandResult processStorageCommand(TaskList taskList) throws JanetException;
 
+    /**
+     * Creates a description of an invalid number of serialized task arguments.
+     *
+     * @param taskName Name of the task type being parsed.
+     * @param positionalArgCount Expected number of task-specific arguments.
+     * @return Description of the invalid argument count.
+     */
     public String generateArgLengthExceptionMessage(String taskName, int positionalArgCount) {
         return String.format(
                 "%s takes %d positional arguments but %d was given",
