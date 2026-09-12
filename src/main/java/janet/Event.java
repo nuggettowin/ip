@@ -16,15 +16,17 @@ public class Event extends Task {
     private final LocalDate from;
     private final LocalDate to;
 
-    // TODO: handle case where start > end
     /**
      * Creates a <code>Event</code> task type
      * with the specified completion status, type, label, starting date, and end date.
      *
-     * @throws JanetException If the task label is empty.
+     * @throws JanetException If the start event date is later than its ending date.
      */
     public Event(boolean isDone, String taskLabel, LocalDate from, LocalDate to) throws JanetException {
         super(isDone, Event.TASK_TYPE, taskLabel);
+        if (from.isAfter(to)) {
+            throw new JanetException("Event start date cannot be after end date!");
+        }
         this.from = from;
         this.to = to;
     }
