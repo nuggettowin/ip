@@ -2,6 +2,7 @@ package janet;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
+import java.util.Comparator;
 import java.util.Map;
 
 /**
@@ -24,6 +25,11 @@ public class Parser {
             "event", this::handleAddEventCommand,
             "delete", this::handleDeleteTaskCommand,
             "sort", this::handleSetTaskListComparatorCommand
+    );
+
+    private final Map<String, Comparator<Task>> listComparators = Map.of(
+            "default", TaskList.defaultComparator,
+            "label", TaskList.labelComparator
     );
 
     /**
@@ -145,6 +151,10 @@ public class Parser {
     }
 
     private TaskList.CommandResult handleSetTaskListComparatorCommand(String argsLine) throws JanetException {
-        return this.taskList.setTaskListComparator(argsLine);
+        if (!this.listComparators.containsKey(argsLine)) {
+            throw new JanetException(String.format("Unknown sort command: %s", argsLine));
+        }
+        Comparator<Task> comparator = this.listComparators.get(argsLine);
+        return this.taskList.setTaskListComparator(comparator);
     }
 }

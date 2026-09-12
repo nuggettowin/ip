@@ -13,13 +13,12 @@ import java.util.stream.Stream;
  */
 public class TaskList {
 
-    private static final int DEFAULT_ORDER = 0;
+    protected static final int DEFAULT_ORDER = 0;
+    protected static final Comparator<Task> defaultComparator = (a, b) -> TaskList.DEFAULT_ORDER;
+    protected static final Comparator<Task> labelComparator = (a, b) -> a.compareTaskLabel(b);
+
     private static final String DEFAULT_COMPARATOR_KEY = "default";
     private final List<Task> tasks;
-    private final Map<String, Comparator<Task>> listComparators = Map.of(
-            "default", (a, b) -> TaskList.DEFAULT_ORDER,
-            "label", (a, b) -> a.compareTaskLabel(b)
-    );
     private final Comparator<Task> currComparator;
 
     /**
@@ -37,7 +36,7 @@ public class TaskList {
      */
     public TaskList() {
         this.tasks = List.of();
-        this.currComparator = listComparators.get(DEFAULT_COMPARATOR_KEY);
+        this.currComparator = TaskList.defaultComparator;
     }
 
     /**
@@ -57,11 +56,7 @@ public class TaskList {
      * @throws JanetException If task already exists.
      */
     public CommandResult addTask(Task task) throws JanetException {
-        List<Task> matchingTasks = this.tasks
-                .stream()
-                .filter((x) -> x.equals(task))
-                .toList();
-
+        List<Task> matchingTasks = this.getMatchingTasks(task);
         if (!matchingTasks.isEmpty()) {
             throw new JanetException(
                     String.format(
@@ -70,6 +65,7 @@ public class TaskList {
                     )
             );
         }
+
         List<Task> updatedTaskList = Stream.concat(
                         this.tasks.stream(),
                         Stream.of(task)
@@ -78,6 +74,13 @@ public class TaskList {
         return new CommandResult(
                 Optional.of(new TaskList(updatedTaskList, this.currComparator)), String.format("%s added!\n", task)
         );
+    }
+
+    private List<Task> getMatchingTasks(Task task) {
+        return this.tasks
+                .stream()
+                .filter((x) -> x.equals(task))
+                .toList();
     }
 
     /**
@@ -170,13 +173,9 @@ public class TaskList {
         return new CommandResult(Optional.of(retTaskList), String.format("%d marked!\n", pos));
     }
 
-    public CommandResult setTaskListComparator(String command) throws JanetException {
-        if (!this.listComparators.containsKey(command)) {
-            throw new JanetException(String.format("Unknown sort command: %s", command));
-        }
-        Comparator<Task> comparator = this.listComparators.get(command);
+    public CommandResult setTaskListComparator(Comparator<Task> comparator) throws JanetException {
         TaskList tasklist = new TaskList(this.tasks, comparator);
-        return new CommandResult(Optional.of(tasklist), String.format("Set sort to [%s]!", command));
+        return new CommandResult(Optional.of(tasklist), "Set sort!");
     }
 
     private boolean isOutOfIndex(int pos) {
