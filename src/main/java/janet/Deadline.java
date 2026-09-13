@@ -30,7 +30,7 @@ public class Deadline extends Task {
 
     @Override
     public String toFileFormat() {
-        return String.join(Task.FILE_DELIMITER, super.toFileFormat(), this.deadline.toString());
+        return String.join(StorageTaskParser.INLINE_SEP, super.toFileFormat(), this.deadline.toString());
     }
 
     @Override

@@ -40,7 +40,7 @@ public class Event extends Task {
     @Override
     public String toFileFormat() {
         return String.join(
-                Task.FILE_DELIMITER,
+                StorageTaskParser.INLINE_SEP,
                 super.toFileFormat(),
                 this.from.toString(),
                 this.to.toString()

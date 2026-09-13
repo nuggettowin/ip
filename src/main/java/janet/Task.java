@@ -5,7 +5,6 @@ package janet;
  */
 public abstract class Task {
 
-    protected static final String FILE_DELIMITER = "|";
     protected final String taskType;
     protected final String taskLabel;
     private final boolean isDone;
@@ -30,7 +29,6 @@ public abstract class Task {
      * @throws JanetException If the new task could not be instantiated.
      */
     public abstract Task markDone() throws JanetException;
-    // TODO throw if already marked
 
     public int compareTaskLabel(Task task) {
         return this.taskLabel.compareTo(task.taskLabel);
@@ -41,7 +39,7 @@ public abstract class Task {
      */
     public String toFileFormat() {
         return String.join(
-                Task.FILE_DELIMITER,
+                StorageTaskParser.INLINE_SEP,
                 this.taskType,
                 this.isDone ? "1" : "0",
                 this.taskLabel
