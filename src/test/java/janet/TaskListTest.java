@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 
 public class TaskListTest {
+
     @Test
     public void listTasks_emptyList_noTasks() {
         assertEquals("No tasks listed!", new TaskList().listTasks().message());

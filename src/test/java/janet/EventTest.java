@@ -6,10 +6,10 @@ import java.time.LocalDate;
 
 import org.junit.jupiter.api.Test;
 
-class EventTest {
+public class EventTest {
 
     @Test
-    void eventWithStartDateAfterEndDate_isRejected() {
+    public void eventWithStartDateAfterEndDate_exceptionThrown() {
         assertThrows(JanetException.class, () -> new Event(
                 false,
                 "Invalid event",

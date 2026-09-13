@@ -1,7 +1,6 @@
 package janet;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 /**
  * Represents a <code>Task</code> that must be completed by a specified deadline.
@@ -10,8 +9,6 @@ public class Deadline extends Task {
 
     protected static final String DEADLINE_SEP = "/by";
     private static final String TASK_TYPE = "D";
-    private static final DateTimeFormatter DATE_TIME_FORMAT =
-            DateTimeFormatter.ofPattern("MMM d yyyy");
     private final LocalDate deadline;
 
     /**
@@ -38,7 +35,7 @@ public class Deadline extends Task {
         return String.format(
                 "%s (by: %s)",
                 super.toString(),
-                this.deadline.format(Deadline.DATE_TIME_FORMAT)
+                this.deadline.format(DateFormat.DATE_TIME_FORMAT)
         );
     }
 }

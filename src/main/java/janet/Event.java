@@ -1,7 +1,6 @@
 package janet;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 /**
  * Represents a task that takes place over a specified period.
@@ -11,8 +10,6 @@ public class Event extends Task {
     protected static final String EVENT_FROM_SEP = "/from";
     protected static final String EVENT_TO_SEP = "/to";
     private static final String TASK_TYPE = "E";
-    private static final DateTimeFormatter DATE_TIME_FORMAT =
-            DateTimeFormatter.ofPattern("MMM d yyyy");
     private final LocalDate from;
     private final LocalDate to;
 
@@ -51,8 +48,8 @@ public class Event extends Task {
     public String toString() {
         return String.format("%s (from: %s to: %s)",
                 super.toString(),
-                this.from.format(Event.DATE_TIME_FORMAT),
-                this.to.format(Event.DATE_TIME_FORMAT)
+                this.from.format(DateFormat.DATE_TIME_FORMAT),
+                this.to.format(DateFormat.DATE_TIME_FORMAT)
         );
     }
 }

@@ -11,6 +11,8 @@ import java.util.Map;
 public class Parser {
 
     protected static final String RESET_WORD = "reset";
+    private static final int COMMAND_INDEX = 0;
+    private static final String ARG_SEPARATOR = "\\s+";
     private static final String EXIT_WORD = "bye";
     private final TaskList taskList;
 
@@ -61,8 +63,8 @@ public class Parser {
      * @throws JanetException If the command is not recognized or cannot be processed.
      */
     public TaskList.CommandResult processCommand(String currLine) throws JanetException {
-        String command = currLine.split("\\s+")[0].trim();
-        String argsLine = currLine.substring(command.length()).trim(); // remaining string
+        String command = this.getCommand(currLine);
+        String argsLine = this.getArgsLine(command, currLine); // remaining string
 
         if (!this.commandMap.containsKey(command)) {
             throw new JanetException("Unrecognised command!");
@@ -71,6 +73,14 @@ public class Parser {
             assert handler != null : "Every registered command must have a handler";
             return handler.handle(argsLine);
         }
+    }
+
+    private String getCommand(String currLine) {
+        return currLine.split(Parser.ARG_SEPARATOR)[Parser.COMMAND_INDEX].trim();
+    }
+
+    private String getArgsLine(String command, String currLine) {
+        return currLine.substring(command.length()).trim();
     }
 
     private TaskList.CommandResult handleListTasksCommand(String argsLine) {

@@ -12,12 +12,12 @@ import java.nio.file.Path;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
-class JanetStorageRecoveryTest {
+class JanetTest {
     @TempDir
     Path temporaryDirectory;
 
     @Test
-    void malformedStorage_requiresResetBeforeCommandsAndRecoversAfterReset() throws IOException, JanetException {
+    public void malformedStorage_requiresResetBeforeCommands_recoversAfterReset() throws IOException, JanetException {
         Path storageFile = temporaryDirectory.resolve("tasks.txt");
         Files.writeString(storageFile, "not a saved task");
         final Janet janet = new Janet(new Storage(storageFile.toFile()));

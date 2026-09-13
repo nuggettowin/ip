@@ -10,12 +10,12 @@ import org.junit.jupiter.api.Test;
 class TaskTest {
 
     @Test
-    void createTask_emptyLabel_exceptionThrown() {
+    public void createTask_emptyLabel_exceptionThrown() {
         assertThrows(JanetException.class, () -> new Todo(false, ""));
     }
 
     @Test
-    void compareTaskLabel_labelsCompared_alphabeticalOrderReturned() throws JanetException {
+    public void compareTaskLabel_labelsCompared_alphabeticalOrderReturned() throws JanetException {
         Task first = new Todo(false, "Buy milk");
         Task second = new Todo(false, "Clean room");
 
@@ -25,13 +25,13 @@ class TaskTest {
     }
 
     @Test
-    void toFileFormat_taskStatusAndLabelProvided_expectedFormatReturned() throws JanetException {
+    public void toFileFormat_taskStatusAndLabelProvided_expectedFormatReturned() throws JanetException {
         assertEquals("T|0|Read book", new Todo(false, "Read book").toFileFormat());
         assertEquals("T|1|Read book", new Todo(true, "Read book").toFileFormat());
     }
 
     @Test
-    void equals_sameTaskTypeAndLabel_trueReturned() throws JanetException {
+    public void equals_sameTaskTypeAndLabel_trueReturned() throws JanetException {
         Task incomplete = new Todo(false, "Read book");
         Task complete = new Todo(true, "Read book");
         Task differentLabel = new Todo(false, "Write book");
@@ -42,7 +42,7 @@ class TaskTest {
     }
 
     @Test
-    void toString_taskStatusAndLabelProvided_expectedFormatReturned() throws JanetException {
+    public void toString_taskStatusAndLabelProvided_expectedFormatReturned() throws JanetException {
         assertEquals("[T][ ] Read book", new Todo(false, "Read book").toString());
         assertEquals("[T][X] Read book", new Todo(true, "Read book").toString());
     }

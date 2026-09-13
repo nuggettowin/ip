@@ -18,7 +18,7 @@ public abstract class StorageTaskParser {
     public record TaskField(boolean isDone, String taskLabel, String[] args) {
     }
 
-    protected static final String INLINE_SEP = Pattern.quote("|");
+    protected static final String INLINE_SEP = "|";
 
     private static final Map<String, StorageCommandHandler> taskMap = Map.of(
             "T", (x) -> new StorageTodoParser(x),
@@ -52,7 +52,7 @@ public abstract class StorageTaskParser {
      * @return The parser corresponding to the command's task type
      */
     public static StorageTaskParser processBaseTask(String storageCommand) throws JanetFileException {
-        String[] tokens = storageCommand.split(StorageTaskParser.INLINE_SEP);
+        String[] tokens = storageCommand.split(Pattern.quote(StorageTaskParser.INLINE_SEP));
         if (tokens.length < StorageTaskParser.TASK_LABEL_INDEX + 1) {
             throw new JanetFileException(
                     String.format("Tasks takes at least %d positional arguments but %d given.",
