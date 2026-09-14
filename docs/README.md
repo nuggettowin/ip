@@ -18,7 +18,7 @@ This user guide provides in-depth documentation on how you can install, configur
 3. Copy the file to the folder you want to use as the home folder for your Janet application.
 4. Open a terminal, cd to the folder containing the `.jar` file, and run `java -jar janet.jar`  
 A GUI similar to the one above should appear in a few seconds. Note how the app contains some sample data.
-5. Type a command in the command box and press Enter to execute it. For example, type `list` and press Enter to list current tasks. You should see your text shown in the chat window, along with Janet's response.
+5. Type a command in the command box and press Enter to execute it. For example, type `list` and press Enter to list current tasks. You should see your text and Janet's response in the chat window.
 
 <a name="features"></a>
 ## Features
@@ -27,8 +27,10 @@ A GUI similar to the one above should appear in a few seconds. Note how the app 
 > * Janet is **case-sensitive**. Commands in a different case won't be recognized.
 > * Extra parameters for commands that take no parameters, like `list`, will be ignored.
 
-### Listing tasks: `task`
+### Listing tasks: `list`
 Displays the list of tasks, if any, currently stored by Janet.
+
+---
 
 ### Adding Tasks
 Adding tasks is simple; all tasks have the same base format for doing so.    
@@ -36,9 +38,12 @@ Adding tasks is simple; all tasks have the same base format for doing so.
 Format: `TASK_TYPE TASK_LABEL`
 * Adds a task with a `TASK_LABEL` description.
 
-Janet will not allow you to add a task with the same `TASK_TYPE` and `TASK_LABEL` as another task in the program. <sub>  
+**Janet will not allow you to add a task with the same `TASK_TYPE` and `TASK_LABEL` as another task in the program**`. <sub>  
 *This is because it's considered a duplicate*.
-#### Adding a todo task: `todo`
+
+<br> 
+
+#### <u>Adding a todo task:</u> `todo`
 Adds a task that has no deadline or period.  
 
 Format: `todo TASK_LABEL`
@@ -47,7 +52,10 @@ Format: `todo TASK_LABEL`
 * `todo eat`
 * `todo meet Sarah`
 
-#### Adding a deadline task: `deadline`
+
+<br> 
+
+#### <u>Adding a deadline task:</u> `deadline`
 Adds a task that has a deadline.
 
 Format: `deadline TASK_LABEL /by DATE`
@@ -58,7 +66,9 @@ Format: `deadline TASK_LABEL /by DATE`
 * `deadline do homework /by 2025-12-03`
 * `deadline finish poetry /by 1847-12-03`
 
-#### Adding an event task: `event`
+<br> 
+
+#### <u>Adding an event task:</u> `event`
 Adds a task that lasts for a specified period.
 
 Format: `event TASK_LABEL /from DATE /to`
@@ -68,6 +78,11 @@ Format: `event TASK_LABEL /from DATE /to`
 *Examples*:
 * `deadline eat lunch /from 2025-12-03 /to 2026-12-03` 
 * `deadline create planes /from 1847-12-03 /to 2026-12-03`
+ 
+  <br>
+
+
+---
 
 ### Deleting a task: `delete`
 Deletes a task, if it exists, based on their current sorted position in the list.  
@@ -77,16 +92,22 @@ Format: `delete INDEX`
 *Example*:  
 `delete 1` Deletes the first item on the list.
 
+---
+
 ### Finding tasks: `find`
 Finds tasks, if any, that match the given phrase.
 
 *Example*
 `find read` Find all tasks whose description has `read` at any part of the description. Matches `read book`, `ready`, etc.
+
+---
+
 ### Marking a task: `mark`
 Marks a task, if it exists, as completed based on their current sorted position in the list.
 
 *Example*:  
 `mark 1` Marks the first item on the list as complete.
+---
 ### Sorting tasks: `sort`
 Sorts tasks based on the provided sort type.
 
