@@ -4,7 +4,12 @@ Welcome to the Janet user guide! Janet is a desktop application that helps you t
 
 ![Janet product screenshot.](Ui.png)
 
-This user guide provides in-depth documentation on how you can install, configure, and set up your own Janet program.
+This user guide provides in-depth documentation on how you can install, configure, and set up your own Janet program. 
+
+This guide is targeted for you if you:
+1. are familiar with operating a command-line interface;
+2. want to quickly set up Janet for personal use; 
+3. want to familiarize yourself fully with the program.
 
 ## Table of Contents
 * [Quick Start](#quick-start)
@@ -18,7 +23,8 @@ This user guide provides in-depth documentation on how you can install, configur
 3. Copy the file to the folder you want to use as the home folder for your Janet application.
 4. Open a terminal, cd to the folder containing the `.jar` file, and run `java -jar janet.jar`  
 A GUI similar to the one above should appear in a few seconds. Note how the app contains some sample data.
-5. Type a command in the command box and press Enter to execute it. For example, type `list` and press Enter to list current tasks. You should see your text and Janet's response in the chat window.
+5. Type a command in the command box and press Enter to execute it.  
+For example, type `list` and press Enter to list current tasks. You should see your text and Janet's response in the chat window.
 
 <a name="features"></a>
 ## Features
@@ -29,6 +35,8 @@ A GUI similar to the one above should appear in a few seconds. Note how the app 
 
 ### Listing tasks: `list`
 Displays the list of tasks, if any, currently stored by Janet.
+
+Format: `list`
 
 ---
 
@@ -97,6 +105,8 @@ Format: `delete INDEX`
 ### Finding tasks: `find`
 Finds tasks, if any, that match the given phrase.
 
+Format: `find PHRASE`
+
 *Example*
 `find read` Find all tasks whose description has `read` at any part of the description. Matches `read book`, `ready`, etc.
 
@@ -104,6 +114,8 @@ Finds tasks, if any, that match the given phrase.
 
 ### Marking a task: `mark`
 Marks a task, if it exists, as completed based on their current sorted position in the list.
+
+Format: `mark INDEX`
 
 *Example*:  
 `mark 1` Marks the first item on the list as complete.  
@@ -113,6 +125,8 @@ Marks a task, if it exists, as completed based on their current sorted position 
 ### Sorting tasks: `sort`
 Sorts tasks based on the provided sort type.
 
+Format: `sort SORT_TYPE`
+
 *Examples:*  
 `sort default` Sorts tasks by their insertion order in the list.  
 `sort label` Sorts tasks by alphabetical order based on their description.
@@ -120,7 +134,21 @@ Sorts tasks based on the provided sort type.
 <a name="faq-start"></a>
 ## FAQ
 **Q**: What happens to my tasks after I close Janet?  
-**A**: Janet stores your tasks in a `.txt` file. You can find this in `/data/tasks.txt` in your app directory; Janet saves to this file every time it's modified. **When you reopen Janet, these tasks are reloaded**.
-> **TIP!**  
+**A**: **Janet stores your tasks in a `.txt` file and loads this up for you when you reopen the program**. You can find this in `/data/tasks.txt` in your app directory; Janet saves to this file every time it's modified.
+> **Note!**  
 > You can manually edit the `tasks.txt` file to add in new tasks.
-**Make sure to format your edits accordingly, or Janet will not load your tasks in storage.**
+**Make sure to format your edits accordingly though, or Janet won't load your tasks.**
+
+## A quick and easy cheatsheet to use Janet
+|Action|Format, Examples|
+|------|----------------|
+|List all tasks|Format: `list`<br>Example: `list`|
+|Add a todo|Format: `todo TASK_LABEL`<br>Example: `todo buy groceries`|
+|Add a deadline|Format: `deadline TASK_LABEL /by DATE`<br>Example: `deadline submit report /by 2026-09-30`|
+|Add an event|Format: `event TASK_LABEL /from DATE /to DATE`<br>Example: `event project meeting /from 2026-09-20 /to 2026-09-21`|
+|Delete a task|Format: `delete INDEX`<br>Example: `delete 2`|
+|Find tasks|Format: `find PHRASE`<br>Example: `find report`|
+|Mark a task as completed|Format: `mark INDEX`<br>Example: `mark 1`|
+|Sort tasks by insertion order|Format: `sort default`<br>Example: `sort default`|
+|Sort tasks alphabetically|Format: `sort label`<br>Example: `sort label`|
+|Exit Janet|Format: `bye`<br>Example: `bye`|
