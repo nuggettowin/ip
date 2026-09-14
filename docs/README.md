@@ -2,7 +2,7 @@
 
 Welcome to the Janet user guide! Janet is a desktop application that helps you track your everyday tasks.
 
-![Janet product screenshot.](/docs/Ui.png)
+![Janet product screenshot.](Ui.png)
 
 This user guide provides in-depth documentation on how you can install, configure, and set up your own Janet program.
 
@@ -18,7 +18,7 @@ This user guide provides in-depth documentation on how you can install, configur
 3. Copy the file to the folder you want to use as the home folder for your Janet application.
 4. Open a terminal, cd to the folder containing the `.jar` file, and run `java -jar janet.jar`  
 A GUI similar to the one above should appear in a few seconds. Note how the app contains some sample data.
-5. Type a command in the command box and press Enter to execute it. For example, type `list` and press Enter to list current tasks.
+5. Type a command in the command box and press Enter to execute it. For example, type `list` and press Enter to list current tasks. You should see your text shown in the chat window, along with Janet's response.
 
 <a name="features"></a>
 ## Features
@@ -31,10 +31,13 @@ A GUI similar to the one above should appear in a few seconds. Note how the app 
 Displays the list of tasks, if any, currently stored by Janet.
 
 ### Adding Tasks
-> Adding tasks is simple; all tasks have the same base format for doing so.   
-Format: `TASK_TYPE TASK_LABEL`
-> * Adds a task with a `TASK_LABEL` description.
+Adding tasks is simple; all tasks have the same base format for doing so.    
 
+Format: `TASK_TYPE TASK_LABEL`
+* Adds a task with a `TASK_LABEL` description.
+
+Janet will not allow you to add a task with the same `TASK_TYPE` and `TASK_LABEL` as another task in the program. <sub>  
+*This is because it's considered a duplicate*.
 #### Adding a todo task: `todo`
 Adds a task that has no deadline or period.  
 
@@ -51,7 +54,9 @@ Adds a task that has a deadline.
 Adds a task that lasts for a specified period.
 
 ### Deleting a task: `delete`
-Deletes a task, if it exists, based on their current sorted position in the list.
+Deletes a task, if it exists, based on their current sorted position in the list.  
+
+Format: `delete INDEX`
 
 *Example*:  
 `delete 1` Deletes the first item on the list.
