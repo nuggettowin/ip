@@ -147,6 +147,7 @@ Format: `bye`
 **Make sure to format your edits accordingly though, or Janet won't load your tasks.**
 
 ## A quick and easy cheatsheet to use Janet
+
 |Action|Format, Examples|
 |------|----------------|
 |List all tasks|Format: `list`<br>Example: `list`|
