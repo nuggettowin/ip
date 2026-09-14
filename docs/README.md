@@ -38,7 +38,7 @@ Adding tasks is simple; all tasks have the same base format for doing so.
 Format: `TASK_TYPE TASK_LABEL`
 * Adds a task with a `TASK_LABEL` description.
 
-**Janet will not allow you to add a task with the same `TASK_TYPE` and `TASK_LABEL` as another task in the program**`. <sub>  
+**Janet will not allow you to add a task with the same `TASK_TYPE` and `TASK_LABEL` as another task in the program**. <sub>  
 *This is because it's considered a duplicate*.
 
 <br> 
@@ -106,8 +106,10 @@ Finds tasks, if any, that match the given phrase.
 Marks a task, if it exists, as completed based on their current sorted position in the list.
 
 *Example*:  
-`mark 1` Marks the first item on the list as complete.
+`mark 1` Marks the first item on the list as complete.  
+
 ---
+
 ### Sorting tasks: `sort`
 Sorts tasks based on the provided sort type.
 
