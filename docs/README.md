@@ -131,6 +131,13 @@ Format: `sort SORT_TYPE`
 `sort default` Sorts tasks by their insertion order in the list.  
 `sort label` Sorts tasks by alphabetical order based on their description.
 
+---
+
+### Exiting program: `bye`
+Exits the program.
+
+Format: `bye`
+
 <a name="faq-start"></a>
 ## FAQ
 **Q**: What happens to my tasks after I close Janet?  
