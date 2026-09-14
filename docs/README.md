@@ -22,7 +22,7 @@ A GUI similar to the one above should appear in a few seconds. Note how the app 
 
 <a name="features"></a>
 ## Features
-> [!IMPORTANT] 
+> **IMPORTANT!** 
 > * Words in `UPPER_CASE` are the parameters to be supplied by the user.  
 > * Janet is **case-sensitive**. Commands in a different case won't be recognized.
 > * Extra parameters for commands that take no parameters, like `list`, will be ignored.
@@ -50,8 +50,24 @@ Format: `todo TASK_LABEL`
 #### Adding a deadline task: `deadline`
 Adds a task that has a deadline.
 
+Format: `deadline TASK_LABEL /by DATE`
+
+**`DATE` must be in the format `yyyy-mm-dd`**
+
+*Examples*:
+* `deadline do homework /by 2025-12-03`
+* `deadline finish poetry /by 1847-12-03`
+
 #### Adding an event task: `event`
 Adds a task that lasts for a specified period.
+
+Format: `event TASK_LABEL /from DATE /to`
+
+**`DATE` must be in the format `yyyy-mm-dd`**
+
+*Examples*:
+* `deadline eat lunch /from 2025-12-03 /to 2026-12-03` 
+* `deadline create planes /from 1847-12-03 /to 2026-12-03`
 
 ### Deleting a task: `delete`
 Deletes a task, if it exists, based on their current sorted position in the list.  
@@ -64,9 +80,13 @@ Format: `delete INDEX`
 ### Finding tasks: `find`
 Finds tasks, if any, that match the given phrase.
 
+*Example*
+`find read` Find all tasks whose description has `read` at any part of the description. Matches `read book`, `ready`, etc.
 ### Marking a task: `mark`
 Marks a task, if it exists, as completed based on their current sorted position in the list.
 
+*Example*:  
+`mark 1` Marks the first item on the list as complete.
 ### Sorting tasks: `sort`
 Sorts tasks based on the provided sort type.
 
@@ -78,6 +98,6 @@ Sorts tasks based on the provided sort type.
 ## FAQ
 **Q**: What happens to my tasks after I close Janet?  
 **A**: Janet stores your tasks in a `.txt` file. You can find this in `/data/tasks.txt` in your app directory; Janet saves to this file every time it's modified. **When you reopen Janet, these tasks are reloaded**.
-> [!TIP]
+> **TIP!**  
 > You can manually edit the `tasks.txt` file to add in new tasks.
 **Make sure to format your edits accordingly, or Janet will not load your tasks in storage.**
