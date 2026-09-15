@@ -23,7 +23,7 @@ This user guide provides in-depth documentation on how you can install, configur
 2. Download the latest `.jar` file from [here](https://github.com/nuggettowin/ip/releases)
 3. Copy the file to the folder you want to use as the home folder for your Janet application.
 4. Open a terminal, `cd` to the folder containing the `.jar` file, and run `java -jar janet.jar`  
-➡️ A GUI similar to the one above should appear in a few seconds. Note how the app contains some sample data.
+➡️ A GUI similar to the one above should appear in a few seconds.
 5. Type a command in the command box and press <kbd>Enter</kbd> to execute it. For example, type `list` and press <kbd>Enter</kbd> to list current tasks.   
 ➡️ You should see your text and Janet's response (`No tasks listed!`) in the chat window.
 
