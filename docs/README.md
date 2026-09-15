@@ -11,22 +11,40 @@ This user guide provides in-depth documentation on how you can install, configur
 2. want to quickly set up Janet; 
 3. want to familiarize yourself fully with Janet.
 
-## Table of Contents
-* [Quick Start](#quick-start)
-* [Features](#features)
-  * [Listing Tasks](#listing)
-  * [Adding Tasks](#adding)
-    * [Adding a todo task](#adding-todo)
-    * [Adding a deadline task](#adding-deadline)
-    * [Adding an event task](#adding-event)
-  * [Deleting Tasks](#deleting)
-  * [Finding Tasks](#finding)
-  * [Marking Tasks](#marking)
-  * [Sorting Tasks](#sorting)
-  * [Exiting](#exiting)
-* [FAQ](#faq)
-  * [What happens to my tasks after I close Janet?](#faq-storage)
-* [Command Cheatsheet](#command-summary)
+<details>
+<summary><h2>Table of Contents</h2></summary>
+
+<ul>
+  <li><a href="#quick-start">Quick Start</a></li>
+  <li>
+    <a href="#features">Features</a>
+    <ul>
+      <li><a href="#listing">Listing Tasks</a></li>
+      <li>
+        <a href="#adding">Adding Tasks</a>
+        <ul>
+          <li><a href="#adding-todo">Adding a todo task</a></li>
+          <li><a href="#adding-deadline">Adding a deadline task</a></li>
+          <li><a href="#adding-event">Adding an event task</a></li>
+        </ul>
+      </li>
+      <li><a href="#deleting">Deleting Tasks</a></li>
+      <li><a href="#finding">Finding Tasks</a></li>
+      <li><a href="#marking">Marking Tasks</a></li>
+      <li><a href="#sorting">Sorting Tasks</a></li>
+      <li><a href="#exiting">Exiting</a></li>
+    </ul>
+  </li>
+  <li>
+    <a href="#faq">FAQ</a>
+    <ul>
+      <li><a href="#faq-storage">What happens to my tasks after I close Janet?</a></li>
+    </ul>
+  </li>
+  <li><a href="#command-summary">Command Cheatsheet</a></li>
+</ul>
+
+</details>
 
 <a name="quick-start"></a>
 ## Quick Start
@@ -41,6 +59,7 @@ This user guide provides in-depth documentation on how you can install, configur
 <a name="features"></a>
 ## Features
 > **📍IMPORTANT!** 
+> * Make sure you follow the format order <u>**exactly**</u>. Otherwise, your commands will be rejected.
 > * Words in `UPPER_CASE` are the parameters to be supplied by the user.  
 > * Janet is **case-sensitive**. Commands in a different case won't be recognized.
 > * Extra parameters for commands that take no parameters, like `list`, will be ignored.

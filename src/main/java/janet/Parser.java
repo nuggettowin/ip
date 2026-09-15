@@ -68,11 +68,11 @@ public class Parser {
 
         if (!this.commandMap.containsKey(command)) {
             throw new JanetException("Unrecognised command!");
-        } else {
-            CommandHandler handler = this.commandMap.get(command);
-            assert handler != null : "Every registered command must have a handler";
-            return handler.handle(argsLine);
         }
+
+        CommandHandler handler = this.commandMap.get(command);
+        assert handler != null : "Every registered command must have a handler";
+        return handler.handle(argsLine);
     }
 
     private String getCommand(String currLine) {
@@ -104,17 +104,20 @@ public class Parser {
     }
 
     private TaskList.CommandResult handleAddDeadlineCommand(String argsLine) throws JanetException {
+        // find what index the /by is located in the line, if exists
         int deadlineIndex = argsLine.indexOf(Deadline.DEADLINE_SEP);
         if (deadlineIndex == -1) {
             throw new JanetException("Deadline not found!");
         }
+
+        // receive the actual string parameters for the command based on index
         String taskLabel = argsLine.substring(0, deadlineIndex).trim();
         String deadline = argsLine.substring(deadlineIndex + Deadline.DEADLINE_SEP.length()).trim();
-
         if (deadline.isEmpty()) {
             throw new JanetException(String.format("Invalid deadline arguments! Deadline: %s\n", deadline));
         }
 
+        // convert to Date format
         try {
             LocalDate deadlineDate = LocalDate.parse(deadline);
             return this.handleAddTaskCommand(new Deadline(false, taskLabel, deadlineDate));
@@ -124,26 +127,47 @@ public class Parser {
     }
 
     private TaskList.CommandResult handleAddEventCommand(String argsLine) throws JanetException {
-        int fromIndex = argsLine.indexOf(Event.EVENT_FROM_SEP);
-        int toIndex = argsLine.indexOf(Event.EVENT_TO_SEP);
+        // find what index the /from and /to is located in the line, if exists
+        int fromIndex = this.getIndexFromStringAndSep(argsLine, Event.EVENT_FROM_SEP);
+        int toIndex = this.getIndexFromStringAndSep(argsLine, Event.EVENT_TO_SEP);
 
-        if (fromIndex == -1 || toIndex == -1) {
-            throw new JanetException("From or To not found!");
-        }
-        String taskLabel = argsLine.substring(0, fromIndex).trim();
-        String from = argsLine.substring(fromIndex + Event.EVENT_FROM_SEP.length(), toIndex).trim();
-        String to = argsLine.substring(toIndex + Event.EVENT_TO_SEP.length()).trim();
+        // receive the actual strings parameters for the command based on index
+        String taskLabel = this.getArgFromIndex(argsLine, 0, fromIndex);
+        String from = this.getArgFromIndex(argsLine, fromIndex + Event.EVENT_FROM_SEP.length(), toIndex);
+        String to = this.getArgFromIndex(argsLine, toIndex + Event.EVENT_TO_SEP.length(), argsLine.length());
 
-        if (from.isEmpty() || to.isEmpty()) {
-            throw new JanetException(String.format("Invalid event arguments! From: %s, to: %s\n", from, to));
-        }
-
+        // convert to Date format
         try {
             LocalDate fromDate = LocalDate.parse(from);
             LocalDate toDate = LocalDate.parse(to);
             return this.handleAddTaskCommand(new Event(false, taskLabel, fromDate, toDate));
         } catch (DateTimeParseException e) {
             throw new JanetException("Invalid date format");
+        }
+    }
+
+    private int getIndexFromStringAndSep(String argsLine, String sep) throws JanetException {
+        int index = argsLine.indexOf(sep);
+        if (index == -1) {
+            throw new JanetException(String.format("Argument not found when parsing [%s]: %s", argsLine, sep));
+        }
+        return index;
+    }
+
+    private String getArgFromIndex(String argsLine, int startIndex, int toIndex) throws JanetException {
+        try {
+            String arg = argsLine.substring(startIndex, toIndex).trim();
+            if (arg.isEmpty()) {
+                throw new JanetException(String.format("Argument is empty when parsing [%s]: %s", argsLine, arg));
+            }
+            return arg;
+        } catch (IndexOutOfBoundsException e) {
+            throw new JanetException(
+                    String.format(
+                            "Arguments are in an invalid order when parsing [%s]",
+                            argsLine
+                    )
+            );
         }
     }
 
