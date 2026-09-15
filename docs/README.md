@@ -25,6 +25,7 @@ This user guide provides in-depth documentation on how you can install, configur
   * [Sorting Tasks](#sorting)
   * [Exiting](#exiting)
 * [FAQ](#faq)
+  * [What happens to my tasks after I close Janet?](#faq-storage)
 * [Command Cheatsheet](#command-summary)
 
 <a name="quick-start"></a>
