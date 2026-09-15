@@ -22,10 +22,10 @@ This guide is targeted for you if you:
 1. **Ensure that Java `25` or later is installed on your computer**.
 2. Download the latest `.jar` file from here
 3. Copy the file to the folder you want to use as the home folder for your Janet application.
-4. Open a terminal, cd to the folder containing the `.jar` file, and run `java -jar janet.jar`  
+4. Open a terminal, `cd` to the folder containing the `.jar` file, and run `java -jar janet.jar`  
 ➡️ A GUI similar to the one above should appear in a few seconds. Note how the app contains some sample data.
 5. Type a command in the command box and press Enter to execute it. For example, type `list` and press Enter to list current tasks.   
-➡️You should see your text and Janet's response (`No tasks listed!`) in the chat window.
+➡️ You should see your text and Janet's response (`No tasks listed!`) in the chat window.
 
 <a name="features"></a>
 ## Features
@@ -108,7 +108,7 @@ Finds tasks, if any, that match the given phrase.
 
 Format: `find PHRASE`
 
-*Example*
+*Example*:  
 `find read` Find all tasks whose description has `read` at any part of the description. Matches `read book`, `ready`, etc.
 
 ---
@@ -142,7 +142,7 @@ Format: `bye`
 <a name="faq"></a>
 ## FAQ
 **Q**: What happens to my tasks after I close Janet?  
-**A**: **Janet stores your tasks in a `.txt` file and loads this up for you when you reopen the program**. You can find this in `/data/tasks.txt` in your app directory; Janet saves to this file every time it's modified.
+**A**: **Janet stores your tasks in a `.txt` file and loads this up for you when you reopen the program**. This is located in `/data/tasks.txt` in your app directory; Janet will save to this file every time it's modified.
 > **📝Note!**  
 > You can manually edit the `tasks.txt` file to add in new tasks.
 **Make sure to format your edits accordingly though, or Janet won't load your tasks.**
