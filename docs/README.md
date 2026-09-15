@@ -14,8 +14,18 @@ This user guide provides in-depth documentation on how you can install, configur
 ## Table of Contents
 * [Quick Start](#quick-start)
 * [Features](#features)
+  * [Listing Tasks](#listing)
+  * [Adding Tasks](#adding)
+    * [Adding a todo task](#adding-todo)
+    * [Adding a deadline task](#adding-deadline)
+    * [Adding an event task](#adding-event)
+  * [Deleting Tasks](#deleting)
+  * [Finding Tasks](#finding)
+  * [Marking Tasks](#marking)
+  * [Sorting Tasks](#sorting)
+  * [Exiting](#exiting)
 * [FAQ](#faq)
-* [Command Cheatsheet](#a-quick-and-easy-cheatsheet-to-use-janet)
+* [Command Cheatsheet](#command-summary)
 
 <a name="quick-start"></a>
 ## Quick Start
@@ -34,6 +44,7 @@ This user guide provides in-depth documentation on how you can install, configur
 > * Janet is **case-sensitive**. Commands in a different case won't be recognized.
 > * Extra parameters for commands that take no parameters, like `list`, will be ignored.
 
+<a name="listing"></a>
 ### Listing tasks: `list`
 Displays the list of tasks, if any, currently stored by Janet.
 
@@ -41,6 +52,7 @@ Format: `list`
 
 ---
 
+<a name="adding"></a>
 ### Adding Tasks
 Adding tasks is simple; all tasks have the same base format for doing so.    
 
@@ -52,6 +64,7 @@ Format: `TASK_TYPE TASK_LABEL`
 
 <br> 
 
+<a name="adding-todo"></a>
 #### <u>Adding a todo task:</u> `todo`
 Adds a task that has no deadline or period.  
 
@@ -64,6 +77,7 @@ Format: `todo TASK_LABEL`
 
 <br> 
 
+<a name="adding-deadline"></a>
 #### <u>Adding a deadline task:</u> `deadline`
 Adds a task that has a deadline.
 
@@ -77,6 +91,7 @@ Format: `deadline TASK_LABEL /by DATE`
 
 <br> 
 
+<a name="adding-event"></a>
 #### <u>Adding an event task:</u> `event`
 Adds a task that lasts for a specified period.
 
@@ -93,7 +108,8 @@ Format: `event TASK_LABEL /from DATE /to`
 
 ---
 
-### Deleting a task: `delete`
+<a name="deleting"></a>
+### Deleting Tasks: `delete`
 Deletes a task, if it exists, based on their current sorted position in the list.  
 
 Format: `delete INDEX`
@@ -103,7 +119,8 @@ Format: `delete INDEX`
 
 ---
 
-### Finding tasks: `find`
+<a name="finding"></a>
+### Finding Tasks: `find`
 Finds tasks, if any, that match the given phrase.
 
 Format: `find PHRASE`
@@ -113,7 +130,8 @@ Format: `find PHRASE`
 
 ---
 
-### Marking a task: `mark`
+<a name="marking"></a>
+### Marking Tasks: `mark`
 Marks a task, if it exists, as completed based on their current sorted position in the list.
 
 Format: `mark INDEX`
@@ -123,7 +141,8 @@ Format: `mark INDEX`
 
 ---
 
-### Sorting tasks: `sort`
+<a name="sorting"></a>
+### Sorting Tasks: `sort`
 Sorts tasks based on the provided sort type.
 
 Format: `sort SORT_TYPE`
@@ -134,13 +153,15 @@ Format: `sort SORT_TYPE`
 
 ---
 
-### Exiting program: `bye`
+<a name="exiting"></a>
+### Exiting: `bye`
 Exits the program.
 
 Format: `bye`
 
 <a name="faq"></a>
 ## FAQ
+<a name="faq-storage"></a>
 **Q**: What happens to my tasks after I close Janet?  
 **A**: **Janet stores your tasks in a `.txt` file and loads this up for you when you reopen the program**. This is located in `/data/tasks.txt` in your app directory; Janet will save to this file every time it's modified.
 > **📝Note!**  
