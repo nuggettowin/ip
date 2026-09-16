@@ -1,6 +1,6 @@
-# Janet project template
+# Janet project
 
-This is a project template for a greenfield Java project. Given below are instructions on how to use it.
+This is a greenfield Java project. Given below are instructions on how to use it.
 
 ## Setting up in Intellij
 
