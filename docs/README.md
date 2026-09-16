@@ -2,7 +2,9 @@
 
 Welcome to the Janet user guide! Janet is a desktop application that helps you track your everyday tasks.
 
-![Janet product screenshot.](Ui.png)
+<p align="center">
+  <img src="Ui.png" alt="Janet product screenshot.">
+</p>
 
 This user guide provides in-depth documentation on how you can install, configure, and set up your own Janet program. 
 
@@ -56,7 +58,11 @@ This user guide provides in-depth documentation on how you can install, configur
 4. Open a terminal, `cd` to the folder containing the `.jar` file, and run `java -jar janet.jar`  
 ➡️ A window similar to the one above should appear on your screen in a few seconds.
 5. Type a command in the command box and press <kbd>Enter</kbd> to execute it. For example, type `list` and press <kbd>Enter</kbd> to list current tasks.   
-➡️ You should see your text and Janet's response (`No tasks listed!`) in the chat window.
+➡️ You should see your text and Janet's response (`No tasks listed!`) in the chat window, as seen below:
+
+<p align="center">
+  <img src="QuickStartList.png" alt="Janet's response after entering the list command.">
+</p>
 
 <a name="features"></a>
 ## Features
