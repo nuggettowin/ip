@@ -8,7 +8,6 @@ import java.util.stream.Stream;
 
 /**
  * An ordered unmodifiable collection of <code>Task</code> elements.
- * The user can access elements by their integer index, and search for elements in the list.
  */
 public class TaskList {
 

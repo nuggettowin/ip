@@ -180,7 +180,7 @@ public class Parser {
         try {
             return this.taskList.deleteTask(Integer.parseInt(argsLine));
         } catch (NumberFormatException e) {
-            throw new JanetException("Mark should contain integer!");
+            throw new JanetException("Delete should contain integer!");
         }
     }
 
