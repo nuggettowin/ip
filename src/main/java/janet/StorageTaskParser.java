@@ -55,9 +55,10 @@ public abstract class StorageTaskParser {
         String[] tokens = storageCommand.split(Pattern.quote(StorageTaskParser.INLINE_SEP));
         if (tokens.length < StorageTaskParser.TASK_LABEL_INDEX + 1) {
             throw new JanetFileException(
-                    String.format("Tasks takes at least %d positional arguments but %d given.",
+                    String.format("All tasks take at least %d positional arguments but %d given: [%s]",
                             StorageTaskParser.TASK_LABEL_INDEX + 1,
-                            tokens.length
+                            tokens.length,
+                            storageCommand
                     )
             );
         }
@@ -93,10 +94,11 @@ public abstract class StorageTaskParser {
      */
     public String generateArgLengthExceptionMessage(String taskName, int positionalArgCount) {
         return String.format(
-                "%s takes %d positional arguments but %d was given",
+                "%s takes %d positional arguments but %d was given: [%s]",
                 taskName,
                 positionalArgCount,
-                positionalArgCount
+                positionalArgCount,
+                this.taskLabel
         );
     }
 }
