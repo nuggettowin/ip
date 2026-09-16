@@ -54,14 +54,14 @@ This user guide provides in-depth documentation on how you can install, configur
 2. Download the latest `.jar` file from [here](https://github.com/nuggettowin/ip/releases)
 3. Copy the file to the folder you want to use as the home folder for your Janet application.
 4. Open a terminal, `cd` to the folder containing the `.jar` file, and run `java -jar janet.jar`  
-➡️ A GUI similar to the one above should appear in a few seconds.
+➡️ A window similar to the one above should appear on your screen in a few seconds.
 5. Type a command in the command box and press <kbd>Enter</kbd> to execute it. For example, type `list` and press <kbd>Enter</kbd> to list current tasks.   
 ➡️ You should see your text and Janet's response (`No tasks listed!`) in the chat window.
 
 <a name="features"></a>
 ## Features
 > **📍IMPORTANT!** 
-> * Make sure you follow the format order <u>**exactly**</u>. Otherwise, your commands will be rejected.
+> * Make sure you follow the format order **<u>exactly</u>**. Otherwise, your commands will be rejected.
 > * Words in `UPPER_CASE` are the parameters to be supplied by the user.  
 > * Janet is **case-sensitive**. Commands in a different case won't be recognized.
 > * Extra parameters for commands that take no parameters, like `list`, will be ignored.
@@ -82,12 +82,14 @@ Format: `TASK_TYPE TASK_LABEL`
 * Adds a task with a `TASK_LABEL` description.
 
 **Janet will not allow you to add a task with the same `TASK_TYPE` and `TASK_LABEL` as another task in the program**. <sub>  
-*This is because it's considered a duplicate*.
+*This is because it's considered a duplicate*.  
+
+In the following section, you'll learn the three types of tasks you can give Janet.
 
 <br> 
 
 <a name="adding-todo"></a>
-#### <u>Adding a todo task:</u> `todo`
+#### <u>1. Adding a todo task:</u> `todo`
 Adds a task that has no deadline or period.  
 
 Format: `todo TASK_LABEL`
@@ -100,7 +102,7 @@ Format: `todo TASK_LABEL`
 <br> 
 
 <a name="adding-deadline"></a>
-#### <u>Adding a deadline task:</u> `deadline`
+#### <u>2. Adding a deadline task:</u> `deadline`
 Adds a task that has a deadline.
 
 Format: `deadline TASK_LABEL /by DATE`
@@ -114,7 +116,7 @@ Format: `deadline TASK_LABEL /by DATE`
 <br> 
 
 <a name="adding-event"></a>
-#### <u>Adding an event task:</u> `event`
+#### <u>3. Adding an event task:</u> `event`
 Adds a task that lasts for a specified period.
 
 Format: `event TASK_LABEL /from DATE /to`
