@@ -20,10 +20,11 @@ public class StorageDeadlineParser extends StorageTaskParser {
     public StorageDeadlineParser(TaskField taskField) throws JanetFileException {
         super(taskField.isDone(), taskField.taskLabel());
 
+        int argsLength = taskField.args().length;
         if (taskField.args().length > StorageDeadlineParser.POSITIONAL_ARG_COUNT) {
             throw new JanetFileException(
                     super.generateArgLengthExceptionMessage(
-                            StorageDeadlineParser.TASK_NAME, StorageDeadlineParser.POSITIONAL_ARG_COUNT
+                            StorageDeadlineParser.TASK_NAME, StorageDeadlineParser.POSITIONAL_ARG_COUNT, argsLength
                     )
             );
         }

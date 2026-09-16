@@ -12,10 +12,12 @@ public class StorageTodoParser extends StorageTaskParser {
      */
     public StorageTodoParser(TaskField taskField) throws JanetFileException {
         super(taskField.isDone(), taskField.taskLabel());
-        if (taskField.args().length > StorageTodoParser.POSITIONAL_ARG_COUNT) {
+
+        int argsLength = taskField.args().length;
+        if (argsLength > StorageTodoParser.POSITIONAL_ARG_COUNT) {
             throw new JanetFileException(
                     super.generateArgLengthExceptionMessage(
-                            StorageTodoParser.TASK_NAME, StorageTodoParser.POSITIONAL_ARG_COUNT
+                            StorageTodoParser.TASK_NAME, StorageTodoParser.POSITIONAL_ARG_COUNT, argsLength
                     )
             );
         }

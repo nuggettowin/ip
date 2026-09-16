@@ -102,12 +102,12 @@ public abstract class StorageTaskParser {
      * @param positionalArgCount Expected number of task-specific arguments.
      * @return Description of the invalid argument count.
      */
-    public String generateArgLengthExceptionMessage(String taskName, int positionalArgCount) {
+    public String generateArgLengthExceptionMessage(String taskName, int positionalArgCount, int actualCount) {
         return String.format(
-                "%s takes %d positional arguments but %d was given: [%s]",
+                "%s takes %d positional arguments but %d was given. Task: [%s]",
                 taskName,
                 positionalArgCount,
-                positionalArgCount,
+                actualCount,
                 this.taskLabel
         );
     }

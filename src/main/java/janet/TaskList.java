@@ -59,7 +59,7 @@ public class TaskList {
         if (!matchingTasks.isEmpty()) {
             throw new JanetException(
                     String.format(
-                            "Duplicate tasks detected! Match(es): %s",
+                            "Duplicate tasks detected! Already existing match(es): %s",
                             matchingTasks.toString()
                     )
             );

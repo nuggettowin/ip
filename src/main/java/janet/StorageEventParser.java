@@ -22,10 +22,11 @@ public class StorageEventParser extends StorageTaskParser {
     public StorageEventParser(TaskField taskField) throws JanetFileException {
         super(taskField.isDone(), taskField.taskLabel());
 
-        if (taskField.args().length > StorageEventParser.POSITIONAL_ARG_COUNT) {
+        int argsLength = taskField.args().length;
+        if (argsLength > StorageEventParser.POSITIONAL_ARG_COUNT) {
             throw new JanetFileException(
                     super.generateArgLengthExceptionMessage(
-                            StorageEventParser.TASK_NAME, StorageEventParser.POSITIONAL_ARG_COUNT
+                            StorageEventParser.TASK_NAME, StorageEventParser.POSITIONAL_ARG_COUNT, argsLength
                     )
             );
         }
