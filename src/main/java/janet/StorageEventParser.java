@@ -1,6 +1,7 @@
 package janet;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 
 /**
  * Parses storage lines representing <code>Event</code> task type.
@@ -30,8 +31,19 @@ public class StorageEventParser extends StorageTaskParser {
         }
         String fromStr = taskField.args()[StorageEventParser.FROM_INDEX];
         String toStr = taskField.args()[StorageEventParser.TO_INDEX];
-        this.from = LocalDate.parse(fromStr);
-        this.to = LocalDate.parse(toStr);
+        try {
+            this.from = LocalDate.parse(fromStr);
+            this.to = LocalDate.parse(toStr);
+        } catch (DateTimeParseException e) {
+            throw new JanetFileException(
+                    String.format(
+                            "Invalid date format: from: %s, to: %s. Error: %s",
+                            fromStr,
+                            toStr,
+                            e.getMessage()
+                    )
+            );
+        }
     }
 
     @Override

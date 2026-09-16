@@ -31,6 +31,7 @@ public abstract class StorageTaskParser {
     private static final int TASK_LABEL_INDEX = 2;
     private static final int COMMAND_ARG_INDEX = StorageTaskParser.TASK_LABEL_INDEX + 1;
     private static final String IS_DONE_STR = "1";
+    private static final String NOT_DONE_STR = "0";
 
     protected final boolean isDone;
     protected final String taskLabel;
@@ -64,7 +65,7 @@ public abstract class StorageTaskParser {
         }
 
         String taskType = tokens[StorageTaskParser.TASK_TYPE_INDEX];
-        boolean isDone = tokens[StorageTaskParser.IS_DONE_INDEX].equals(StorageTaskParser.IS_DONE_STR);
+        boolean isDone = StorageTaskParser.isDone(tokens[StorageTaskParser.IS_DONE_INDEX]);
         String taskLabel = tokens[StorageTaskParser.TASK_LABEL_INDEX];
 
         String[] args = Arrays.copyOfRange(
@@ -76,11 +77,20 @@ public abstract class StorageTaskParser {
         TaskField taskFields = new TaskField(isDone, taskLabel, args);
 
         if (!StorageTaskParser.taskMap.containsKey(taskType)) {
-            throw new JanetFileException(String.format("Unrecognized task type: %s", taskType));
+            throw new JanetFileException(
+                    String.format("Unrecognized task type: %s. Line: %s", taskType, storageCommand)
+            );
         }
         return StorageTaskParser.taskMap
                 .get(taskType)
                 .handle(taskFields);
+    }
+
+    private static boolean isDone(String doneStr) throws JanetFileException {
+        if (!(doneStr.equals(StorageTaskParser.IS_DONE_STR) || doneStr.equals(StorageTaskParser.NOT_DONE_STR))) {
+            throw new JanetFileException(String.format("Unrecognized mark type: %s", doneStr));
+        }
+        return doneStr.equals(StorageTaskParser.IS_DONE_STR);
     }
 
     public abstract TaskList.CommandResult processStorageCommand(TaskList taskList) throws JanetException;

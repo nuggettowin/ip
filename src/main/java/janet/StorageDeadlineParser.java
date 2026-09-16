@@ -1,6 +1,7 @@
 package janet;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 
 /**
  * Parses storage lines representing <code>Deadline</code> task type.
@@ -27,8 +28,18 @@ public class StorageDeadlineParser extends StorageTaskParser {
             );
         }
 
-        String deadlinStr = taskField.args()[StorageDeadlineParser.DEADLINE_INDEX];
-        this.deadline = LocalDate.parse(deadlinStr);
+        String deadlineStr = taskField.args()[StorageDeadlineParser.DEADLINE_INDEX];
+        try {
+            this.deadline = LocalDate.parse(deadlineStr);
+        } catch (DateTimeParseException e) {
+            throw new JanetFileException(
+                    String.format(
+                            "Invalid date format: Deadline: %s. Error: %s",
+                            deadlineStr,
+                            e.getMessage()
+                    )
+            );
+        }
     }
 
     @Override
