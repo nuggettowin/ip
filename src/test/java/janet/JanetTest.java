@@ -23,7 +23,8 @@ class JanetTest {
         final Janet janet = new Janet(new Storage(storageFile.toFile()));
 
         assertTrue(janet.isStorageRecoveryRequired());
-        assertTrue(janet.getStorageRecoveryPrompt().contains("Tasks takes at least 3 positional arguments"));
+        assertTrue(janet.getStorageRecoveryPrompt()
+                .contains("All tasks take at least 3 positional arguments"));
         assertThrows(JanetException.class, () -> Janet.getResponse(janet, "list"));
 
         assertFalse(janet.isResolveStorageRecoveryRequest("keep"));
